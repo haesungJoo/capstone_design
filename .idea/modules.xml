@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/capston_design.iml" filepath="$PROJECT_DIR$/.idea/modules/capston_design.iml" group="capston_design" />
       <module fileurl="file://$PROJECT_DIR$/.idea/capstone.iml" filepath="$PROJECT_DIR$/.idea/capstone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/capstone_design.iml" filepath="$PROJECT_DIR$/.idea/modules/capstone_design.iml" group="capstone_design" />
     </modules>
   </component>
 </project>
