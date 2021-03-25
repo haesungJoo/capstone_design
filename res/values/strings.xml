@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">IAI PROTOTYPE</string>
+	<string name="btn_actionstart">기능켜기</string>
+	<string name="btn_actionstop">기능끄끼</string>
+    <string name="btn_sue">수동신고</string>
+</resources>
