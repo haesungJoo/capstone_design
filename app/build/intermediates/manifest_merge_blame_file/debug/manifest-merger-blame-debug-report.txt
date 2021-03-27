@@ -1,0 +1,52 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="ai.kitt.snowboy.demo"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk android:minSdkVersion="10" />
+7-->D:\Workspace\capstone\app\AndroidManifest.xml
+8
+9    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+9-->D:\Workspace\capstone\app\AndroidManifest.xml:16:5-76
+9-->D:\Workspace\capstone\app\AndroidManifest.xml:16:22-73
+10    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+10-->D:\Workspace\capstone\app\AndroidManifest.xml:17:5-71
+10-->D:\Workspace\capstone\app\AndroidManifest.xml:17:22-68
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->D:\Workspace\capstone\app\AndroidManifest.xml:18:5-67
+11-->D:\Workspace\capstone\app\AndroidManifest.xml:18:22-64
+12    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+12-->D:\Workspace\capstone\app\AndroidManifest.xml:19:5-80
+12-->D:\Workspace\capstone\app\AndroidManifest.xml:19:22-78
+13
+14    <application
+14-->D:\Workspace\capstone\app\AndroidManifest.xml:5:5-14:19
+15        android:debuggable="true"
+16        android:icon="@mipmap/ic_launcher"
+16-->D:\Workspace\capstone\app\AndroidManifest.xml:5:51-85
+17        android:label="@string/app_name"
+17-->D:\Workspace\capstone\app\AndroidManifest.xml:5:18-50
+18        android:testOnly="true" >
+19        <activity
+19-->D:\Workspace\capstone\app\AndroidManifest.xml:6:9-13:20
+20            android:name="ai.kitt.snowboy.Demo"
+20-->D:\Workspace\capstone\app\AndroidManifest.xml:6:19-54
+21            android:label="@string/app_name"
+21-->D:\Workspace\capstone\app\AndroidManifest.xml:8:19-51
+22            android:windowSoftInputMode="stateHidden" >
+22-->D:\Workspace\capstone\app\AndroidManifest.xml:7:16-57
+23            <intent-filter>
+23-->D:\Workspace\capstone\app\AndroidManifest.xml:9:13-12:29
+24                <action android:name="android.intent.action.MAIN" />
+24-->D:\Workspace\capstone\app\AndroidManifest.xml:10:17-69
+24-->D:\Workspace\capstone\app\AndroidManifest.xml:10:25-66
+25
+26                <category android:name="android.intent.category.LAUNCHER" />
+26-->D:\Workspace\capstone\app\AndroidManifest.xml:11:17-77
+26-->D:\Workspace\capstone\app\AndroidManifest.xml:11:27-74
+27            </intent-filter>
+28        </activity>
+29    </application>
+30
+31</manifest>

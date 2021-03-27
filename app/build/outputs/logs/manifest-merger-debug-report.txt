@@ -1,0 +1,71 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml:2:1-20:12
+	package
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:4:33-63
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+	android:versionName
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:4:7-32
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:3:7-30
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+application
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:5:5-14:19
+	android:label
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:5:18-50
+	android:icon
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:5:51-85
+activity#ai.kitt.snowboy.Demo
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:6:9-13:20
+	android:label
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:8:19-51
+	android:windowSoftInputMode
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:7:16-57
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:6:19-54
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:9:13-12:29
+action#android.intent.action.MAIN
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:10:17-69
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:10:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:11:17-77
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:11:27-74
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:16:5-76
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:16:22-73
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:17:5-71
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:17:22-68
+uses-permission#android.permission.INTERNET
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:18:5-67
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:18:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:19:5-80
+	android:name
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml:19:22-78
+uses-sdk
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml
+		ADDED from D:\Workspace\capstone\app\AndroidManifest.xml
+		INJECTED from D:\Workspace\capstone\app\AndroidManifest.xml

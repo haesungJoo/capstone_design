@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "D:\\Workspace\\capstone\\app\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,1,1,4",
+                        "startOffsets": "73,122,169,218",
+                        "endColumns": "50,45,44,40",
+                        "endOffsets": "119,166,212,254"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,106,155,203",
+                        "endColumns": "50,48,47,40",
+                        "endOffsets": "101,150,198,239"
+                    }
+                }
+            ]
+        }
+    ]
+}
