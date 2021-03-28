@@ -26,7 +26,8 @@ public class RecordingThread {
     private static final String TAG = RecordingThread.class.getSimpleName();
 
     private static final String ACTIVE_RES = Constants.ACTIVE_RES;
-    private static final String ACTIVE_UMDL = Constants.HELPMEMIN_PMDL;
+    // TODO 테스트 하기 위한 모델
+    private static final String ACTIVE_UMDL = Constants.TEST_PMDL;
 //    private static final String ACTIVE_UMDL = Constants.ACTIVE_UMDL;
 
     private TimerThread timerThread = null;
@@ -47,9 +48,9 @@ public class RecordingThread {
         this.handler = handler;
         this.listener = listener;
 
-        detector.SetSensitivity("0.44");
+        detector.SetSensitivity("0.4");
         detector.SetAudioGain(1f);
-        detector.ApplyFrontend(true);
+        detector.ApplyFrontend(false);
         try {
             player.setDataSource(strEnvWorkSpace+"ding.wav");
             player.prepare();
