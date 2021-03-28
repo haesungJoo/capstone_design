@@ -14,4 +14,6 @@ public class Constants {
     public static final String ACTIVE_RES = "common.res";
     public static final String SAVE_AUDIO = Constants.DEFAULT_WORK_SPACE + File.separatorChar + "recording.pcm";
     public static final int SAMPLE_RATE = 16000;
+
+    public static final String SAVE_AUDIO_PROJECT = Constants.DEFAULT_WORK_SPACE + File.separatorChar;
 }

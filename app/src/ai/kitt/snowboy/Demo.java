@@ -100,6 +100,10 @@ public class Demo extends Activity {
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
+            if(msg.obj != null){
+                // TODO 준호형 (.wav 파일 경로를 반환하는 곳입니다.)
+                String filePath = msg.obj.toString();
+            }
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
                 case MSG_ACTIVE:

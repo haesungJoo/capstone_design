@@ -19,12 +19,21 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import ai.kitt.snowboy.SnowboyDetect;
+import ai.kitt.snowboy.util.TimerDataSaver;
 import ai.kitt.snowboy.util.TimerThread;
 
 public class RecordingThread {
-    static { System.loadLibrary("snowboy-detect-android"); }
-    private static final String TAG = RecordingThread.class.getSimpleName();
+    static {
+        try{
+            System.loadLibrary("snowboy-detect-android");
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private static final String TAG = RecordingThread.class.getSimpleName();
+//    private static final String TAG = "RecordingThread";
     private static final String ACTIVE_RES = Constants.ACTIVE_RES;
     // TODO 테스트 하기 위한 모델
     private static final String ACTIVE_UMDL = Constants.TEST_PMDL;
@@ -33,13 +42,15 @@ public class RecordingThread {
     private TimerThread timerThread = null;
 
     private boolean shouldContinue;
+    private boolean isWordDetected = false; // TimerThread에 의해서 2초동안의 파일 저장을 위한 flag
     private AudioDataReceivedListener listener = null;
+    private TimerDataSaver timer_listener = null;
     private Handler handler = null;
     private Thread thread;
     
     private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
     private String activeModel = strEnvWorkSpace+ACTIVE_UMDL;    
-    private String commonRes = strEnvWorkSpace+ACTIVE_RES;   
+    private String commonRes = strEnvWorkSpace+ACTIVE_RES;
     
     private SnowboyDetect detector = new SnowboyDetect(commonRes, activeModel);
     private MediaPlayer player = new MediaPlayer();
@@ -48,7 +59,7 @@ public class RecordingThread {
         this.handler = handler;
         this.listener = listener;
 
-        detector.SetSensitivity("0.4");
+        detector.SetSensitivity("0.41");
         detector.SetAudioGain(1f);
         detector.ApplyFrontend(false);
         try {
@@ -59,6 +70,7 @@ public class RecordingThread {
         }
 
         timerThread = new TimerThread(timer_handler);
+        timer_listener = new TimerDataSaver();
     }
 
     private void sendMessage(MsgEnum what, Object obj){
@@ -130,6 +142,10 @@ public class RecordingThread {
             if (null != listener) {
                 listener.onAudioDataReceived(audioBuffer, audioBuffer.length);
             }
+
+            if(isWordDetected){
+                timer_listener.onAudioDataReceived(audioBuffer, audioBuffer.length);
+            }
             
             // Converts to short array.
             short[] audioData = new short[audioBuffer.length / 2];
@@ -150,7 +166,11 @@ public class RecordingThread {
                 // sendMessage(MsgEnum.MSG_VAD_SPEECH, null);
             } else if (result > 0) {
                 sendMessage(MsgEnum.MSG_ACTIVE, null);
+
                 timerThread.timer();
+                timer_listener.start();
+                isWordDetected = true; // 타이머의 시작과 동시에 녹음이 시작하게 한다.
+
                 Log.i("Snowboy: ", "Hotword " + Integer.toString(result) + " detected!");
                 player.start();
             }
@@ -173,7 +193,8 @@ public class RecordingThread {
 
             switch (message){
                 case MSG_STOP:
-                    msg_timer = handler.obtainMessage(MsgEnum.MSG_STOP.ordinal(), null);
+                    msg_timer = handler.obtainMessage(MsgEnum.MSG_STOP.ordinal(), timer_listener.stop_timer());
+                    isWordDetected = false; // 2초 뒤에 녹음이 멈추게끔 한다.
                     break;
                 default:
                     msg_timer = handler.obtainMessage(MsgEnum.MSG_TIMER_ERROR.ordinal(), null);
