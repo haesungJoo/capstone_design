@@ -5,20 +5,20 @@ ai/kitt/snowboy/audio/RecordingThread.java
  ai.kitt.snowboy.audio.RecordingThread$1
  ai.kitt.snowboy.audio.RecordingThread$2
  ai.kitt.snowboy.audio.RecordingThread$3
+ai/kitt/snowboy/SmsSend.java
+ ai.kitt.snowboy.SmsSend
 ai/kitt/snowboy/Constants.java
  ai.kitt.snowboy.Constants
 ai/kitt/snowboy/SnowboyVad.java
  ai.kitt.snowboy.SnowboyVad
 ai/kitt/snowboy/MsgEnum.java
  ai.kitt.snowboy.MsgEnum
+ai/kitt/snowboy/util/TimerDataSaver.java
+ ai.kitt.snowboy.util.TimerDataSaver
 ai/kitt/snowboy/snowboyJNI.java
  ai.kitt.snowboy.snowboyJNI
-ai/kitt/snowboy/Demo.java
- ai.kitt.snowboy.Demo
- ai.kitt.snowboy.Demo$1
- ai.kitt.snowboy.Demo$2
- ai.kitt.snowboy.Demo$3
- ai.kitt.snowboy.Demo$4
+ai/kitt/snowboy/demo/BuildConfig.java
+ ai.kitt.snowboy.demo.BuildConfig
 ai/kitt/snowboy/util/TimerThread.java
  ai.kitt.snowboy.util.TimerThread
  ai.kitt.snowboy.util.TimerThread$1
@@ -31,5 +31,11 @@ ai/kitt/snowboy/SnowboyDetect.java
  ai.kitt.snowboy.SnowboyDetect
 ai/kitt/snowboy/audio/AudioDataReceivedListener.java
  ai.kitt.snowboy.audio.AudioDataReceivedListener
-ai/kitt/snowboy/demo/BuildConfig.java
- ai.kitt.snowboy.demo.BuildConfig
+ai/kitt/snowboy/GpsTracker.java
+ ai.kitt.snowboy.GpsTracker
+ai/kitt/snowboy/Demo.java
+ ai.kitt.snowboy.Demo
+ ai.kitt.snowboy.Demo$1
+ ai.kitt.snowboy.Demo$2
+ ai.kitt.snowboy.Demo$3
+ ai.kitt.snowboy.Demo$4

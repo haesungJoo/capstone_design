@@ -4,49 +4,63 @@
 4    android:versionCode="1"
 5    android:versionName="1.0" >
 6
-7    <uses-sdk android:minSdkVersion="10" />
-7-->D:\Workspace\capstone\app\AndroidManifest.xml
-8
-9    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-9-->D:\Workspace\capstone\app\AndroidManifest.xml:16:5-76
-9-->D:\Workspace\capstone\app\AndroidManifest.xml:16:22-73
-10    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-10-->D:\Workspace\capstone\app\AndroidManifest.xml:17:5-71
-10-->D:\Workspace\capstone\app\AndroidManifest.xml:17:22-68
-11    <uses-permission android:name="android.permission.INTERNET" />
-11-->D:\Workspace\capstone\app\AndroidManifest.xml:18:5-67
-11-->D:\Workspace\capstone\app\AndroidManifest.xml:18:22-64
-12    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-12-->D:\Workspace\capstone\app\AndroidManifest.xml:19:5-80
-12-->D:\Workspace\capstone\app\AndroidManifest.xml:19:22-78
-13
-14    <application
-14-->D:\Workspace\capstone\app\AndroidManifest.xml:5:5-14:19
-15        android:debuggable="true"
-16        android:icon="@mipmap/ic_launcher"
-16-->D:\Workspace\capstone\app\AndroidManifest.xml:5:51-85
-17        android:label="@string/app_name"
-17-->D:\Workspace\capstone\app\AndroidManifest.xml:5:18-50
-18        android:testOnly="true" >
-19        <activity
-19-->D:\Workspace\capstone\app\AndroidManifest.xml:6:9-13:20
-20            android:name="ai.kitt.snowboy.Demo"
-20-->D:\Workspace\capstone\app\AndroidManifest.xml:6:19-54
-21            android:label="@string/app_name"
-21-->D:\Workspace\capstone\app\AndroidManifest.xml:8:19-51
-22            android:windowSoftInputMode="stateHidden" >
-22-->D:\Workspace\capstone\app\AndroidManifest.xml:7:16-57
-23            <intent-filter>
-23-->D:\Workspace\capstone\app\AndroidManifest.xml:9:13-12:29
-24                <action android:name="android.intent.action.MAIN" />
-24-->D:\Workspace\capstone\app\AndroidManifest.xml:10:17-69
-24-->D:\Workspace\capstone\app\AndroidManifest.xml:10:25-66
-25
-26                <category android:name="android.intent.category.LAUNCHER" />
-26-->D:\Workspace\capstone\app\AndroidManifest.xml:11:17-77
-26-->D:\Workspace\capstone\app\AndroidManifest.xml:11:27-74
-27            </intent-filter>
-28        </activity>
-29    </application>
-30
-31</manifest>
+7    <uses-sdk
+8        android:minSdkVersion="14"
+8-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->[androidx.preference:preference:1.1.1] C:\Users\KJM\.gradle\caches\transforms-2\files-2.1\b7f624538b3b9b419a197115fa477125\preference-1.1.1\AndroidManifest.xml:22:9-38
+10
+11    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+11-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:16:5-76
+11-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:16:22-73
+12    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+12-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:17:5-71
+12-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:17:22-68
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:18:5-67
+13-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:18:22-64
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:19:5-80
+14-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:19:22-78
+15    <uses-permission android:name="android.permission.SEND_SMS" />
+15-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:20:5-67
+15-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:20:22-64
+16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+16-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:21:5-79
+16-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:21:22-76
+17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+17-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:22:5-80
+17-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:22:22-78
+18
+19    <application
+19-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:5:5-14:19
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.1.0] C:\Users\KJM\.gradle\caches\transforms-2\files-2.1\e601daed4ba62929db8b322b2974c8f8\core-1.1.0\AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:icon="@mipmap/ic_launcher"
+22-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:5:51-85
+23        android:label="@string/app_name"
+23-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:5:18-50
+24        android:testOnly="true" >
+25        <activity
+25-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:6:9-13:20
+26            android:name="ai.kitt.snowboy.Demo"
+26-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:6:19-54
+27            android:label="@string/app_name"
+27-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:8:19-51
+28            android:windowSoftInputMode="stateHidden" >
+28-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:7:16-57
+29            <intent-filter>
+29-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:9:13-12:29
+30                <action android:name="android.intent.action.MAIN" />
+30-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:10:17-69
+30-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:10:25-66
+31
+32                <category android:name="android.intent.category.LAUNCHER" />
+32-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:11:17-77
+32-->C:\Users\KJM\Desktop\Graduation\capstone_design\app\AndroidManifest.xml:11:27-74
+33            </intent-filter>
+34        </activity>
+35    </application>
+36
+37</manifest>
