@@ -26,7 +26,6 @@ public class RecordingThread {
     static {
         try{
             System.loadLibrary("snowboy-detect-android");
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -194,7 +193,7 @@ public class RecordingThread {
             switch (message){
                 case MSG_STOP:
                     msg_timer = handler.obtainMessage(MsgEnum.MSG_STOP.ordinal(), timer_listener.stop_timer());
-                    isWordDetected = false; // 2초 뒤에 녹음이 멈추게끔 한다.
+                    isWordDetected = false; // 3초 뒤에 녹음이 멈추게끔 한다.
                     break;
                 default:
                     msg_timer = handler.obtainMessage(MsgEnum.MSG_TIMER_ERROR.ordinal(), null);

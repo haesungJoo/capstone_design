@@ -12,9 +12,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import ai.kitt.snowboy.audio.AudioDataSaver;
 import ai.kitt.snowboy.demo.R;
 
+import ai.kitt.snowboy.modelUtil.Classifier;
+import ai.kitt.snowboy.modelUtil.FileFormatNotSupportedException;
+import ai.kitt.snowboy.modelUtil.JLibrosa;
+import ai.kitt.snowboy.modelUtil.Result;
+import ai.kitt.snowboy.modelUtil.WavFileException;
 import ai.kitt.snowboy.util.TimerThread;
 
 public class Demo extends Activity {
@@ -27,6 +34,7 @@ public class Demo extends Activity {
     private RecordingThread recordingThread;
 
     private TimerThread timerThread;
+    private Classifier mClassifier;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +111,38 @@ public class Demo extends Activity {
             if(msg.obj != null){
                 // TODO 준호형 (.wav 파일 경로를 반환하는 곳입니다.)
                 String filePath = msg.obj.toString();
+
+                JLibrosa jLibrosa = new JLibrosa();
+                try {
+                    float [] audioFeatureValues = jLibrosa.loadAndRead(filePath, -1,-1);
+                    mClassifier = new Classifier(audioFeatureValues, Demo.this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (FileFormatNotSupportedException e) {
+                    e.printStackTrace();
+                }
+
+                Result result = mClassifier.classify();
+                String emotion;
+                int n_idx = result.getNumber();
+
+                switch(n_idx){
+                    case 0:
+                        emotion = "화남";
+                        break;
+                    case 1:
+                        emotion = "중립";
+                        break;
+                    case 2:
+                        emotion = "행복";
+                        break;
+                    case 3:
+                        emotion = "두려움";
+                        break;
+                    default:
+                        emotion = "오류";
+                        break;
+                }
             }
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
