@@ -1,4 +1,4 @@
-package ai.kitt.snowboy;
+package ai.kitt.snowboy.jmUtil;
 
 import android.Manifest;
 import android.app.Service;
@@ -141,7 +141,7 @@ public class GpsTracker extends Service implements LocationListener {
     {
         if(locationManager != null)
         {
-            locationManager.removeUpdates(ai.kitt.snowboy.GpsTracker.this);
+            locationManager.removeUpdates(GpsTracker.this);
         }
     }
 }

@@ -2,17 +2,12 @@ package ai.kitt.snowboy;
 
 import ai.kitt.snowboy.audio.RecordingThread;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -22,23 +17,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 
 import java.io.IOException;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 import ai.kitt.snowboy.audio.AudioDataSaver;
 import ai.kitt.snowboy.demo.R;
 
+import ai.kitt.snowboy.jmUtil.GpsTracker;
+import ai.kitt.snowboy.jmUtil.SmsSend;
 import ai.kitt.snowboy.modelUtil.Classifier;
 import ai.kitt.snowboy.modelUtil.FileFormatNotSupportedException;
 import ai.kitt.snowboy.modelUtil.JLibrosa;
@@ -188,8 +179,6 @@ public class Demo extends Activity {
                 }
             }, 5000);
 
-
-
         }
     };
     
@@ -234,6 +223,8 @@ public class Demo extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (FileFormatNotSupportedException e) {
+                    e.printStackTrace();
+                } catch (WavFileException e) {
                     e.printStackTrace();
                 }
 

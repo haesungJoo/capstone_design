@@ -1,4 +1,4 @@
-package ai.kitt.snowboy;
+package ai.kitt.snowboy.jmUtil;
 
 import android.content.Context;
 import android.telephony.SmsManager;
