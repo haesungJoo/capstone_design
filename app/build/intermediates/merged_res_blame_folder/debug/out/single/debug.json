@@ -24,6 +24,10 @@
         "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\raw_siren.wav.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\raw\\siren.wav"
+    },
+    {
         "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-xxhdpi\\ic_launcher.png"
     }
