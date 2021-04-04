@@ -60,23 +60,23 @@ public class WavFile {
         return fileSize;
     }
 
-    public static ai.kitt.snowboy.modelutil.WavFile openWavFile(File file) throws IOException, ai.kitt.snowboy.modelutil.WavFileException {
-        ai.kitt.snowboy.modelutil.WavFile wavFile = new ai.kitt.snowboy.modelutil.WavFile();
+    public static ai.kitt.snowboy.modelUtil.WavFile openWavFile(File file) throws IOException, ai.kitt.snowboy.modelUtil.WavFileException {
+        ai.kitt.snowboy.modelUtil.WavFile wavFile = new ai.kitt.snowboy.modelUtil.WavFile();
         wavFile.file = file;
         wavFile.iStream = new FileInputStream(file);
 
         int bytesRead = wavFile.iStream.read(wavFile.buffer, 0, 12);
-        if (bytesRead != 12) throw new ai.kitt.snowboy.modelutil.WavFileException("Not enough wav file bytes for header");
+        if (bytesRead != 12) throw new ai.kitt.snowboy.modelUtil.WavFileException("Not enough wav file bytes for header");
 
         long riffChunkID = getLE(wavFile.buffer, 0, 4);
         long chunkSize = getLE(wavFile.buffer, 4, 4);
         long riffTypeID = getLE(wavFile.buffer, 8, 4);
 
         if (riffChunkID != RIFF_CHUNK_ID)
-            throw new ai.kitt.snowboy.modelutil.WavFileException("Invalid Wav Header data, incorrect riff chunk ID");
-        if (riffTypeID != RIFF_TYPE_ID) throw new ai.kitt.snowboy.modelutil.WavFileException("Invalid Wav Header data, incorrect riff type ID");
+            throw new ai.kitt.snowboy.modelUtil.WavFileException("Invalid Wav Header data, incorrect riff chunk ID");
+        if (riffTypeID != RIFF_TYPE_ID) throw new ai.kitt.snowboy.modelUtil.WavFileException("Invalid Wav Header data, incorrect riff type ID");
         if (file.length() != chunkSize + 8) {
-            throw new ai.kitt.snowboy.modelutil.WavFileException("Header chunk size (" + chunkSize + ") does not match file size (" + file.length() + ")");
+            throw new ai.kitt.snowboy.modelUtil.WavFileException("Header chunk size (" + chunkSize + ") does not match file size (" + file.length() + ")");
         }
 
         wavFile.fileSize = chunkSize;
@@ -86,8 +86,8 @@ public class WavFile {
 
         while (true) {
             bytesRead = wavFile.iStream.read(wavFile.buffer, 0, 8);
-            if (bytesRead == -1) throw new ai.kitt.snowboy.modelutil.WavFileException("Reached end of file without finding format chunk");
-            if (bytesRead != 8) throw new ai.kitt.snowboy.modelutil.WavFileException("Could not read chunk header");
+            if (bytesRead == -1) throw new ai.kitt.snowboy.modelUtil.WavFileException("Reached end of file without finding format chunk");
+            if (bytesRead != 8) throw new ai.kitt.snowboy.modelUtil.WavFileException("Could not read chunk header");
 
             long chunkID = getLE(wavFile.buffer, 0, 4);
             chunkSize = getLE(wavFile.buffer, 4, 4);
@@ -98,7 +98,7 @@ public class WavFile {
                 bytesRead = wavFile.iStream.read(wavFile.buffer, 0, 16);
                 int compressionCode = (int) getLE(wavFile.buffer, 0, 2);
                 if (compressionCode != 1)
-                    throw new ai.kitt.snowboy.modelutil.WavFileException("Compression Code " + compressionCode + " not supported");
+                    throw new ai.kitt.snowboy.modelUtil.WavFileException("Compression Code " + compressionCode + " not supported");
 
                 wavFile.numChannels = (int) getLE(wavFile.buffer, 2, 2);
                 wavFile.sampleRate = getLE(wavFile.buffer, 4, 4);
@@ -106,24 +106,24 @@ public class WavFile {
                 wavFile.validBits = (int) getLE(wavFile.buffer, 14, 2);
 
                 if (wavFile.numChannels == 0)
-                    throw new ai.kitt.snowboy.modelutil.WavFileException("Number of channels specified in header is equal to zero");
+                    throw new ai.kitt.snowboy.modelUtil.WavFileException("Number of channels specified in header is equal to zero");
                 if (wavFile.blockAlign == 0)
-                    throw new ai.kitt.snowboy.modelutil.WavFileException("Block Align specified in header is equal to zero");
-                if (wavFile.validBits < 2) throw new ai.kitt.snowboy.modelutil.WavFileException("Valid Bits specified in header is less than 2");
+                    throw new ai.kitt.snowboy.modelUtil.WavFileException("Block Align specified in header is equal to zero");
+                if (wavFile.validBits < 2) throw new ai.kitt.snowboy.modelUtil.WavFileException("Valid Bits specified in header is less than 2");
                 if (wavFile.validBits > 64)
-                    throw new ai.kitt.snowboy.modelutil.WavFileException("Valid Bits specified in header is greater than 64, this is greater than a long can hold");
+                    throw new ai.kitt.snowboy.modelUtil.WavFileException("Valid Bits specified in header is greater than 64, this is greater than a long can hold");
 
                 wavFile.bytesPerSample = (wavFile.validBits + 7) / 8;
                 if (wavFile.bytesPerSample * wavFile.numChannels != wavFile.blockAlign)
-                    throw new ai.kitt.snowboy.modelutil.WavFileException("Block Align does not agree with bytes required for validBits and number of channels");
+                    throw new ai.kitt.snowboy.modelUtil.WavFileException("Block Align does not agree with bytes required for validBits and number of channels");
 
                 numChunkBytes -= 16;
                 if (numChunkBytes > 0) wavFile.iStream.skip(numChunkBytes);
             } else if (chunkID == DATA_CHUNK_ID) {
 
-                if (foundFormat == false) throw new ai.kitt.snowboy.modelutil.WavFileException("Data chunk found before Format chunk");
+                if (foundFormat == false) throw new ai.kitt.snowboy.modelUtil.WavFileException("Data chunk found before Format chunk");
                 if (chunkSize % wavFile.blockAlign != 0)
-                    throw new ai.kitt.snowboy.modelutil.WavFileException("Data Chunk size is not multiple of Block Align");
+                    throw new ai.kitt.snowboy.modelUtil.WavFileException("Data Chunk size is not multiple of Block Align");
 
                 wavFile.numFrames = chunkSize / wavFile.blockAlign;
 
@@ -134,7 +134,7 @@ public class WavFile {
             }
         }
 
-        if (foundData == false) throw new ai.kitt.snowboy.modelutil.WavFileException("Did not find a data chunk");
+        if (foundData == false) throw new ai.kitt.snowboy.modelUtil.WavFileException("Did not find a data chunk");
         if (wavFile.validBits > 8) {
             wavFile.floatOffset = 0;
             wavFile.floatScale = 1 << (wavFile.validBits - 1);
@@ -160,13 +160,13 @@ public class WavFile {
         return val;
     }
 
-    private double readSample() throws IOException, ai.kitt.snowboy.modelutil.WavFileException {
+    private double readSample() throws IOException, ai.kitt.snowboy.modelUtil.WavFileException {
         long val = 0;
 
         for (int b = 0; b < bytesPerSample; b++) {
             if (bufferPointer == bytesRead) {
                 int read = iStream.read(buffer, 0, BUFFER_SIZE);
-                if (read == -1) throw new ai.kitt.snowboy.modelutil.WavFileException("Not enough data available");
+                if (read == -1) throw new ai.kitt.snowboy.modelUtil.WavFileException("Not enough data available");
                 bytesRead = read;
                 bufferPointer = 0;
             }
@@ -180,11 +180,11 @@ public class WavFile {
         return val/32767.0;
     }
 
-    public int readFrames(float[] sampleBuffer, int numFramesToRead) throws IOException, ai.kitt.snowboy.modelutil.WavFileException {
+    public int readFrames(float[] sampleBuffer, int numFramesToRead) throws IOException, ai.kitt.snowboy.modelUtil.WavFileException {
         return readFramesInternal(sampleBuffer, 0, numFramesToRead);
     }
 
-    private int readFramesInternal(float[] sampleBuffer, int offset, int numFramesToRead) throws IOException, ai.kitt.snowboy.modelutil.WavFileException {
+    private int readFramesInternal(float[] sampleBuffer, int offset, int numFramesToRead) throws IOException, ai.kitt.snowboy.modelUtil.WavFileException {
         if (ioState != IOState.READING) throw new IOException("Cannot read from WavFile instance");
 
         for (int f = 0; f < numFramesToRead; f++) {
@@ -199,11 +199,11 @@ public class WavFile {
         return numFramesToRead;
     }
 
-    public int readFrames(float[][] sampleBuffer, int numFramesToRead, int frameOffset) throws IOException, ai.kitt.snowboy.modelutil.WavFileException {
+    public int readFrames(float[][] sampleBuffer, int numFramesToRead, int frameOffset) throws IOException, ai.kitt.snowboy.modelUtil.WavFileException {
         return readFramesInternal(sampleBuffer, frameOffset, numFramesToRead);
     }
 
-    private int readFramesInternal(float[][] sampleBuffer, int frameOffset, int numFramesToRead) throws IOException, ai.kitt.snowboy.modelutil.WavFileException {
+    private int readFramesInternal(float[][] sampleBuffer, int frameOffset, int numFramesToRead) throws IOException, ai.kitt.snowboy.modelUtil.WavFileException {
         if (ioState != IOState.READING) throw new IOException("Cannot read from WavFile instance");
 
         for (int f = 0; f < numFramesToRead; f++) {
