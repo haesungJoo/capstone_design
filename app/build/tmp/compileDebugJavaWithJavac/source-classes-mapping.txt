@@ -37,5 +37,9 @@ ai/kitt/snowboy/Demo.java
  ai.kitt.snowboy.Demo
  ai.kitt.snowboy.Demo$1
  ai.kitt.snowboy.Demo$2
+ ai.kitt.snowboy.Demo$2$1
+ ai.kitt.snowboy.Demo$2$2
+ ai.kitt.snowboy.Demo$2$3
  ai.kitt.snowboy.Demo$3
  ai.kitt.snowboy.Demo$4
+ ai.kitt.snowboy.Demo$5

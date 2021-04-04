@@ -9,9 +9,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +22,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +43,12 @@ public class Demo extends Activity {
 
     private Button record_button;
     private Button play_button;
+    private Button siren_button;
+
+    SoundPool soundPool;
+    int soundID;
+    int streamID;
+    Boolean is_ing = false;
 
     private SmsSend smsSend;
     private GpsTracker gpsTracker;
@@ -54,7 +65,10 @@ public class Demo extends Activity {
 
         setContentView(R.layout.main);
         setUI(); // button textview 등 기본 구성
-        
+
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC,0);
+        soundID = soundPool.load(Demo.this, R.raw.siren,1);
+
 //        setProperVolume(); //
 
         AppResCopy.copyResFromAssetsToSD(this);
@@ -78,6 +92,10 @@ public class Demo extends Activity {
         play_button = (Button) findViewById(R.id.btn_sue);
         play_button.setOnClickListener(selfsue_button_handle);
         play_button.setEnabled(true);
+
+        siren_button = (Button) findViewById(R.id.btn_ciren);
+        siren_button.setOnClickListener(siren_button_handle);
+        siren_button.setEnabled(true);
     }
     
     private void startRecording() {
@@ -95,7 +113,7 @@ public class Demo extends Activity {
         } catch (Exception e) {}
     }
 
-    // TODO 수동으로 신고하는 버튼 기능 추가
+    
     private OnClickListener record_button_handle = new OnClickListener() {
         // @Override
         public void onClick(View arg0) {
@@ -109,23 +127,90 @@ public class Demo extends Activity {
         }
     };
 
+    // 수동 신고
+    public void report(){
+        gpsTracker = new GpsTracker(Demo.this);
+        double latitude = gpsTracker.getLatitude();
+        double longitude =gpsTracker.getLongitude();
+        String loc = getCurrentAddress(latitude,longitude);
+
+        //문자 전송
+        smsSend = new SmsSend(Demo.this);
+        String msg = "살려주세요! 제 위치는 "+loc+" 입니다.";
+        String phnum = "01026670860";
+        smsSend.sendMsg(msg,phnum);
+    }
+
     private OnClickListener selfsue_button_handle = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            smsSend = new SmsSend(Demo.this);
-            String msg = "살려주세요! 제 위치는 ";
-            String phnum = "01026670860";
-            gpsTracker = new GpsTracker(Demo.this);
-            double latitude = gpsTracker.getLatitude();
-            double longitude =gpsTracker.getLongitude();
-            String loc = getCurrentAddress(latitude,longitude);
-            smsSend.sendMsg(msg+loc+" 입니다.",phnum);
+
+            //경고창
+            AlertDialog.Builder ad = new AlertDialog.Builder(Demo.this);
+            ad.setIcon(R.mipmap.ic_launcher);
+            ad.setTitle("긴급 신고");//제목
+            ad.setMessage("5초 뒤 신고메시지가 전송됩니다.");//내용
+
+            //final EditText et = new EditText(Demo.this);
+            //ad.setView(et);
+
+            ad.setPositiveButton("바로 전송", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    report();
+                    dialog.dismiss();
+                }
+            });
+
+            ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            final AlertDialog alertDialog = ad.create();
+            alertDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(alertDialog.isShowing()){
+                        report();
+                        alertDialog.dismiss();
+                    }
+                }
+            }, 5000);
 
 
 
         }
     };
     
+    private void startSiren(){
+        streamID = soundPool.play(soundID,1f,1f,0,-1,1f);
+        siren_button.setText("사이렌 끄기");
+        is_ing=true;
+    }
+
+    private void stopSiren(){
+        soundPool.stop(streamID);
+        siren_button.setText("사이렌 울리기");
+        is_ing=false;
+    }
+
+    private OnClickListener siren_button_handle = new OnClickListener() {
+        // @Override
+        public void onClick(View arg0) {
+            if(is_ing==false){
+                startSiren();
+                Log.d("is_ing : ",is_ing.toString());
+            }
+            else if(is_ing==true){
+                stopSiren();
+                Log.d("is_ing : ",is_ing.toString());
+            }
+        }
+    };
+
     public Handler handle = new Handler() {
         @SuppressLint("HandlerLeak")
         @Override
