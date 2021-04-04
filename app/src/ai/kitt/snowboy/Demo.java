@@ -56,7 +56,7 @@ public class Demo extends Activity {
     private RecordingThread recordingThread;
 
     private TimerThread timerThread;
-    private Classifier mClassifier;
+    private Classifier mClassifier; // commit message를 위한 변경
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
