@@ -1,30 +1,34 @@
 [
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\mipmap-xhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\mipmap-mdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\layout\\main.xml"
     },
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon.png.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\drawable\\icon.png"
     },
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon.png.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\drawable\\icon.png"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "D:\\Workspace\\capstone\\app\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
-        "source": "D:\\Workspace\\capstone\\app\\res\\layout\\main.xml"
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\raw_siren.wav.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\raw\\siren.wav"
+    },
+    {
+        "merged": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\KJM\\Desktop\\Graduation\\capstone_design\\app\\res\\mipmap-xxhdpi\\ic_launcher.png"
     }
 ]
