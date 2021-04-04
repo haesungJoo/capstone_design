@@ -212,7 +212,8 @@ public class Demo extends Activity {
                 startSiren();
                 Log.d("is_ing : ",is_ing.toString());
             }
-            else if(is_ing==true){
+            else
+                if(is_ing==true){
                 stopSiren();
                 Log.d("is_ing : ",is_ing.toString());
             }
