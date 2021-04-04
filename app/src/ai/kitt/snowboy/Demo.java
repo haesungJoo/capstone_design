@@ -21,9 +21,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-<<<<<<< HEAD
+
 import java.io.IOException;
-=======
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,7 +30,6 @@ import androidx.core.content.ContextCompat;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
->>>>>>> origin/jongmin
 
 import ai.kitt.snowboy.audio.AudioDataSaver;
 import ai.kitt.snowboy.demo.R;
