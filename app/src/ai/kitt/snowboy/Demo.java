@@ -28,7 +28,9 @@ import java.util.Locale;
 import ai.kitt.snowboy.audio.AudioDataSaver;
 import ai.kitt.snowboy.demo.R;
 
+import ai.kitt.snowboy.jmUtil.AlertTime;
 import ai.kitt.snowboy.jmUtil.GpsTracker;
+import ai.kitt.snowboy.jmUtil.SirenSound;
 import ai.kitt.snowboy.jmUtil.SmsSend;
 import ai.kitt.snowboy.modelUtil.Classifier;
 import ai.kitt.snowboy.modelUtil.FileFormatNotSupportedException;
@@ -43,13 +45,8 @@ public class Demo extends Activity {
     private Button play_button;
     private Button siren_button;
 
-    SoundPool soundPool;
-    int soundID;
-    int streamID;
-    Boolean is_ing = false;
-
-    private SmsSend smsSend;
-    private GpsTracker gpsTracker;
+    private AlertTime alertTime;
+    private SirenSound sirenSound;
 
     private static long activeTimes = 0;
 
@@ -64,9 +61,6 @@ public class Demo extends Activity {
 
         setContentView(R.layout.main);
         setUI(); // button textview 등 기본 구성
-
-        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC,0);
-        soundID = soundPool.load(Demo.this, R.raw.siren,1);
 
 //        setProperVolume(); //
 
@@ -126,84 +120,26 @@ public class Demo extends Activity {
         }
     };
 
-    // 수동 신고
-    public void report(){
-        gpsTracker = new GpsTracker(Demo.this);
-        double latitude = gpsTracker.getLatitude();
-        double longitude =gpsTracker.getLongitude();
-        String loc = getCurrentAddress(latitude,longitude);
 
-        //문자 전송
-        smsSend = new SmsSend(Demo.this);
-        String msg = "살려주세요! 제 위치는 "+loc+" 입니다.";
-        String phnum = "01026670860";
-        smsSend.sendMsg(msg,phnum);
-    }
 
     private OnClickListener selfsue_button_handle = new OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            //경고창
-            AlertDialog.Builder ad = new AlertDialog.Builder(Demo.this);
-            ad.setIcon(R.mipmap.ic_launcher);
-            ad.setTitle("긴급 신고");//제목
-            ad.setMessage("5초 뒤 신고메시지가 전송됩니다.");//내용
-
-            //final EditText et = new EditText(Demo.this);
-            //ad.setView(et);
-
-            ad.setPositiveButton("바로 전송", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    report();
-                    dialog.dismiss();
-                }
-            });
-
-            ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            final AlertDialog alertDialog = ad.create();
-            alertDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(alertDialog.isShowing()){
-                        report();
-                        alertDialog.dismiss();
-                    }
-                }
-            }, 5000);
-
+            alertTime.showDialog();
         }
     };
-    
-    private void startSiren(){
-        streamID = soundPool.play(soundID,1f,1f,0,-1,1f);
-        siren_button.setText("사이렌 끄기");
-        is_ing=true;
-    }
 
-    private void stopSiren(){
-        soundPool.stop(streamID);
-        siren_button.setText("사이렌 울리기");
-        is_ing=false;
-    }
 
     private OnClickListener siren_button_handle = new OnClickListener() {
         // @Override
         public void onClick(View arg0) {
-            if(is_ing==false){
-                startSiren();
-                Log.d("is_ing : ",is_ing.toString());
+            if(sirenSound.is_ing==false){
+                sirenSound.startSiren();
+                siren_button.setText("사이렌 끄기");
             }
-            else if(is_ing==true){
-                stopSiren();
-                Log.d("is_ing : ",is_ing.toString());
+            else if(sirenSound.is_ing==true){
+                sirenSound.stopSiren();
+                siren_button.setText("사이렌 울리기");
             }
         }
     };
@@ -244,6 +180,7 @@ public class Demo extends Activity {
                         break;
                     case 3:
                         emotion = "두려움";
+                        //jm control
                         break;
                     default:
                         emotion = "오류";
@@ -280,43 +217,6 @@ public class Demo extends Activity {
              }
         }
     };
-
-    public String getCurrentAddress( double latitude, double longitude) {
-
-        //지오코더... GPS를 주소로 변환
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
-        List<Address> addresses;
-
-        try {
-
-            addresses = geocoder.getFromLocation(
-                    latitude,
-                    longitude,
-                    7);
-        } catch (IOException ioException) {
-            //네트워크 문제
-            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            return "지오코더 서비스 사용불가";
-        } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            return "잘못된 GPS 좌표";
-
-        }
-
-
-
-        if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-            return "주소 미발견";
-
-        }
-
-        Address address = addresses.get(0);
-        return address.getAddressLine(0).toString()+"\n";
-
-    }
-
 
     @Override
      public void onDestroy() {
