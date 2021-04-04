@@ -14,7 +14,7 @@ import java.nio.channels.FileChannel;
 import java.util.Arrays;
 
 public class Classifier {
-    private static final String LOG_TAG = ai.kitt.snowboy.modelutil.Classifier.class.getSimpleName();
+    private static final String LOG_TAG = ai.kitt.snowboy.modelUtil.Classifier.class.getSimpleName();
     private static final String MODEL_NAME = "speechemotion.tflite";
     private static final int NUM_CLASSES = 4;
 
@@ -24,10 +24,10 @@ public class Classifier {
     private final float[] featurevector = new float[180];
 
 
-    public Classifier(float[] audioFeatureValues, Activity activity) throws IOException, FileFormatNotSupportedException, ai.kitt.snowboy.modelutil.WavFileException {
+    public Classifier(float[] audioFeatureValues, Activity activity) throws IOException, FileFormatNotSupportedException, ai.kitt.snowboy.modelUtil.WavFileException {
         mInterpreter = new Interpreter(loadModelFile(activity), options);
 
-        ai.kitt.snowboy.modelutil.JLibrosa jLibrosa = new ai.kitt.snowboy.modelutil.JLibrosa();
+        ai.kitt.snowboy.modelUtil.JLibrosa jLibrosa = new ai.kitt.snowboy.modelUtil.JLibrosa();
 
         int nNoOfFrames = jLibrosa.getNoOfFrames();
         int sampleRate = jLibrosa.getSampleRate();

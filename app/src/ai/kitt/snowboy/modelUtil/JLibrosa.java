@@ -58,13 +58,13 @@ public class JLibrosa {
     }
 
     public float[][] loadAndReadAcrossChannels(String path, int sr, int readDurationInSec)
-            throws IOException, ai.kitt.snowboy.modelutil.WavFileException, FileFormatNotSupportedException {
+            throws IOException, ai.kitt.snowboy.modelUtil.WavFileException, FileFormatNotSupportedException {
         float[][] magValues = readMagnitudeValuesFromFile(path, sr, readDurationInSec);
         return magValues;
     }
 
     private float[][] readMagnitudeValuesFromFile(String path, int sampleRate, int readDurationInSeconds)
-            throws IOException, ai.kitt.snowboy.modelutil.WavFileException, FileFormatNotSupportedException {
+            throws IOException, ai.kitt.snowboy.modelUtil.WavFileException, FileFormatNotSupportedException {
 
         if(!path.endsWith(".wav")) {
             throw new FileFormatNotSupportedException("File format not supported. jLibrosa currently supports audio processing of only .wav files");
@@ -246,7 +246,7 @@ public class JLibrosa {
     }
 
     public float[] loadAndRead(String path, int sampleRate, int readDurationInSeconds)
-            throws IOException, ai.kitt.snowboy.modelutil.WavFileException, FileFormatNotSupportedException {
+            throws IOException, ai.kitt.snowboy.modelUtil.WavFileException, FileFormatNotSupportedException {
 
         float[][] magValueArray = readMagnitudeValuesFromFile(path, sampleRate, readDurationInSeconds);
 
@@ -268,7 +268,7 @@ public class JLibrosa {
     }
 
     public ArrayList<Float> loadAndReadAsList(String path, int sampleRate, int readDurationInSeconds)
-            throws IOException, ai.kitt.snowboy.modelutil.WavFileException, FileFormatNotSupportedException {
+            throws IOException, ai.kitt.snowboy.modelUtil.WavFileException, FileFormatNotSupportedException {
 
         float[][] magValueArray = readMagnitudeValuesFromFile(path, sampleRate, readDurationInSeconds);
 
