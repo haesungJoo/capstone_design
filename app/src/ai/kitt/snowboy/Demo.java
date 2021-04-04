@@ -62,6 +62,9 @@ public class Demo extends Activity {
         setContentView(R.layout.main);
         setUI(); // button textview 등 기본 구성
 
+        alertTime = new AlertTime(this);
+        sirenSound = new SirenSound(this);
+
 //        setProperVolume(); //
 
         AppResCopy.copyResFromAssetsToSD(this);
@@ -120,15 +123,12 @@ public class Demo extends Activity {
         }
     };
 
-
-
     private OnClickListener selfsue_button_handle = new OnClickListener() {
         @Override
         public void onClick(View v) {
             alertTime.showDialog();
         }
     };
-
 
     private OnClickListener siren_button_handle = new OnClickListener() {
         // @Override

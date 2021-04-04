@@ -81,9 +81,7 @@ public class AlertTime {
         Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
 
         List<Address> addresses;
-
         try {
-
             addresses = geocoder.getFromLocation(
                     latitude,
                     longitude,
@@ -95,7 +93,6 @@ public class AlertTime {
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(mContext, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
-
         }
 
         if (addresses == null || addresses.size() == 0) {
