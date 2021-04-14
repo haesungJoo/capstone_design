@@ -67,4 +67,5 @@ dependencies {
     implementation('org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly') { changing = true }
     implementation('org.tensorflow:tensorflow-lite-support:0.0.0-nightly') { changing = true }
     implementation 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'com.google.android.material:material:1.2.1'
 }
