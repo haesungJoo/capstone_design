@@ -109,7 +109,6 @@ public class Demo extends Activity {
         } catch (Exception e) {}
     }
 
-    
     private OnClickListener record_button_handle = new OnClickListener() {
         // @Override
         public void onClick(View arg0) {

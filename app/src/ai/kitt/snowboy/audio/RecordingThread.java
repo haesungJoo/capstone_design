@@ -166,12 +166,14 @@ public class RecordingThread {
             } else if (result > 0) {
                 sendMessage(MsgEnum.MSG_ACTIVE, null);
 
+                // ding 소리 나는 부분
+                player.start();
+
                 timerThread.timer();
                 timer_listener.start();
                 isWordDetected = true; // 타이머의 시작과 동시에 녹음이 시작하게 한다.
 
                 Log.i("Snowboy: ", "Hotword " + Integer.toString(result) + " detected!");
-                player.start();
             }
         }
 
