@@ -12,6 +12,10 @@ public class AppResCopy {
     private final static String TAG = AppResCopy.class.getSimpleName(); // AppResCopy
     private static String envWorkSpace = Constants.DEFAULT_WORK_SPACE;
 
+    public static void copyResFromAssetsToSD(Context context) {
+        copyFilesFromAssets(context, Constants.ASSETS_RES_DIR, envWorkSpace+"/", true);
+    }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private static void copyFilesFromAssets(Context context, String assetsSrcDir, String sdcardDstDir, boolean override) {
         try {
@@ -61,7 +65,4 @@ public class AppResCopy {
         }
     }
 
-    public static void copyResFromAssetsToSD(Context context) {
-        copyFilesFromAssets(context, Constants.ASSETS_RES_DIR, envWorkSpace+"/", true);
-    }
 }

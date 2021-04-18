@@ -117,16 +117,17 @@ public class RecordingThread {
 
         byte[] audioBuffer = new byte[bufferSize];
         AudioRecord record = new AudioRecord(
-            MediaRecorder.AudioSource.DEFAULT,
+            MediaRecorder.AudioSource.MIC,
             Constants.SAMPLE_RATE,
             AudioFormat.CHANNEL_IN_MONO,
             AudioFormat.ENCODING_PCM_16BIT,
             bufferSize);
 
-        if (record.getState() != AudioRecord.STATE_INITIALIZED) {
-            Log.e(TAG, "Audio Record can't initialize!");
-            return;
-        }
+//        if (record.getState() != AudioRecord.STATE_INITIALIZED) {
+//            Log.e(TAG, "Audio Record can't initialize!");
+//            return;
+//        }
+
         record.startRecording();
         if (null != listener) {
             listener.start();
@@ -145,7 +146,7 @@ public class RecordingThread {
             if(isWordDetected){
                 timer_listener.onAudioDataReceived(audioBuffer, audioBuffer.length);
             }
-            
+
             // Converts to short array.
             short[] audioData = new short[audioBuffer.length / 2];
             ByteBuffer.wrap(audioBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(audioData);
@@ -177,8 +178,8 @@ public class RecordingThread {
             }
         }
 
-//        record.stop();
-//        record.release();
+        record.stop();
+        record.release();
 
         if (null != listener) {
             listener.stop();

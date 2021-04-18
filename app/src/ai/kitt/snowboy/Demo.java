@@ -65,8 +65,6 @@ public class Demo extends Activity {
         alertTime = new AlertTime(this);
         sirenSound = new SirenSound(this);
 
-//        setProperVolume(); //
-
         AppResCopy.copyResFromAssetsToSD(this);
         
         activeTimes = 0;

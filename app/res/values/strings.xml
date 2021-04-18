@@ -4,4 +4,5 @@
 	<string name="btn_actionstart">기능켜기</string>
 	<string name="btn_actionstop">기능끄끼</string>
     <string name="btn_sue">수동신고</string>
+    <string name="base_url">http://122.47.129.128:3000/</string>
 </resources>
