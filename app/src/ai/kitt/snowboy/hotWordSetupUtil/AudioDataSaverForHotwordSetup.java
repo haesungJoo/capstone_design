@@ -1,43 +1,28 @@
-package ai.kitt.snowboy.util;
+package ai.kitt.snowboy.hotWordSetupUtil;
 
-import android.util.Log;
+import android.os.Environment;
 
 import java.io.BufferedOutputStream;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import ai.kitt.snowboy.Constants;
-import ai.kitt.snowboy.audio.AudioDataReceivedListener;
+import ai.kitt.snowboy.util.PcmToWavFile;
 
-public class TimerDataSaver implements AudioDataReceivedListener {
-
-    private static final String TAG = TimerDataSaver.class.getSimpleName();
-
+public class AudioDataSaverForHotwordSetup {
     private File saveFile = null;
     private DataOutputStream dataOutputStream = null;
-
-    private String mFilePath = null;
     private PcmToWavFile pcmToWavFile;
 
-    public TimerDataSaver() {
-        Date today = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("MMdd_HH_mm_ss_");
+    private static String mPath;
 
+    public AudioDataSaverForHotwordSetup(String fileName) {
+        mPath = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+fileName;
         pcmToWavFile = new PcmToWavFile();
-        mFilePath = Constants.SAVE_AUDIO_PROJECT + sdf.format(today) + "project.pcm";
-
-        this.saveFile = new File(mFilePath);
+        this.saveFile = new File(mPath);
     }
 
-    @Override
-    public void start() {
+    public void start(){
         if(saveFile != null){
             if(saveFile.exists()){
                 saveFile.delete();
@@ -51,14 +36,13 @@ public class TimerDataSaver implements AudioDataReceivedListener {
             try{
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(this.saveFile));
                 dataOutputStream = new DataOutputStream(bufferedOutputStream);
-            } catch (FileNotFoundException e) {
+            }catch (Exception e){
                 e.printStackTrace();
             }
         }
     }
 
-    @Override
-    public void onAudioDataReceived(byte[] data, int length) {
+    public void onAudioDataReceived(byte[] data, int length){
         try{
             if(dataOutputStream != null){
                 dataOutputStream.write(data, 0, length);
@@ -68,12 +52,7 @@ public class TimerDataSaver implements AudioDataReceivedListener {
         }
     }
 
-    @Override
-    public void stop() {
-
-    }
-
-    public String stop_timer() {
+    public void stop(){
 
         String pFilePath = null;
 
@@ -84,18 +63,26 @@ public class TimerDataSaver implements AudioDataReceivedListener {
                 e.printStackTrace();
             }
 
-            pFilePath = mFilePath.replace("pcm", "wav");
+            pFilePath = mPath.replace("pcm", "wav");
 
-            File f1 = new File(mFilePath);
+            File f1 = new File(mPath);
             File f2 = new File(pFilePath);
 
+            // 기존 pcm 파일을 wav로 변환
             try{
                 pcmToWavFile.rawToWave(f1, f2);
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }
 
-        return pFilePath;
+            // 기존 pcm 파일 제거
+            try{
+                if(f1.exists()){
+                    f1.delete();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ public class Splash extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent spIntent = new Intent(Splash.this, Demo.class);
+                Intent spIntent = new Intent(Splash.this, HotwordSetupActivity.class);
                 startActivity(spIntent);
                 finish();
             }
