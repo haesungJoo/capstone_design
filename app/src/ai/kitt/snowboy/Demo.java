@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.AudioManager;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
@@ -44,6 +46,7 @@ public class Demo extends Activity {
     private Button record_button;
     private Button play_button;
     private Button siren_button;
+    private Button btn_model_regenerate;
 
     private AlertTime alertTime;
     private SirenSound sirenSound;
@@ -90,6 +93,9 @@ public class Demo extends Activity {
         siren_button = (Button) findViewById(R.id.btn_ciren);
         siren_button.setOnClickListener(siren_button_handle);
         siren_button.setEnabled(true);
+
+        btn_model_regenerate = (Button) findViewById(R.id.btn_model_regenerate);
+        btn_model_regenerate.setOnClickListener(btn_model_regenerate_handle);
     }
     
     private void startRecording() {
@@ -138,6 +144,20 @@ public class Demo extends Activity {
                 sirenSound.stopSiren();
                 siren_button.setText("사이렌 울리기");
             }
+        }
+    };
+
+    private OnClickListener btn_model_regenerate_handle = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            File file = new File(Constants.PERSONAL_MODEL_GENERATED);
+            if(file.exists()){
+                file.delete();
+            }
+
+            Intent intent = new Intent(Demo.this, HotwordSetupActivity.class);
+            startActivity(intent);
+            finish();
         }
     };
 
@@ -203,7 +223,7 @@ public class Demo extends Activity {
                     Toast.makeText(Demo.this, "MSG_ERROR", Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_STOP:
-                    Toast.makeText(Demo.this, "MSG_STOP", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Demo.this, "MSG_STOP", Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_TIMER_ERROR:
                     Toast.makeText(Demo.this, "MSG_TIMER_ERROR", Toast.LENGTH_SHORT).show();

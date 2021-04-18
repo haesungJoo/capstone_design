@@ -2,6 +2,7 @@ package ai.kitt.snowboy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -69,24 +70,13 @@ public class HotwordSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotword_setup);
 
-//        if(checkPermissionFromDevice(PERMISSIONS)){
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                requestPermissions(PERMISSIONS, REQUEST_PERMISSION_CODE);
-//            }
-//        }else{
-//            finish();
-//        }
+        if(checkPermissionFromDevice(PERMISSIONS)){
+        }else{
+            ActivityCompat.requestPermissions(HotwordSetupActivity.this, PERMISSIONS, REQUEST_PERMISSION_CODE);
+        }
 
         setUI();
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if(requestCode == REQUEST_PERMISSION_CODE){
-//
-//        }
-//    }
 
     public void setUI(){
         btn_record_first = findViewById(R.id.btn_record_first);
@@ -169,8 +159,6 @@ public class HotwordSetupActivity extends AppCompatActivity {
         serverService = new ServerService(HotwordSetupActivity.this, handler);
         serverService.requestUploadMultiple(file1, file2, file3);
 
-//        녹음한 파일 3개 제거
-//        fileExistCheck.fileDelete(file1, file2, file3);
     }
 
     public Handler handler = new Handler(){
@@ -181,6 +169,14 @@ public class HotwordSetupActivity extends AppCompatActivity {
             switch (message){
                 case MSG_MODEL_GENERATED:
 //                    Toast.makeText(HotwordSetupActivity.this, "화면 넘김 성공.", Toast.LENGTH_SHORT).show();
+
+                    File file1 = fileExistCheck.filePathConnector("record1.wav");
+                    File file2 = fileExistCheck.filePathConnector("record2.wav");
+                    File file3 = fileExistCheck.filePathConnector("record3.wav");
+
+//                    녹음한 파일 3개 제거
+                    fileExistCheck.fileDelete(file1, file2, file3);
+
                     Intent spIntent = new Intent(HotwordSetupActivity.this, Demo.class);
                     startActivity(spIntent);
                     finish();
@@ -201,5 +197,18 @@ public class HotwordSetupActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_PERMISSION_CODE:
+                for(int grant: grantResults){
+                    if(grant != 0){
+                        finish();
+                    }
+                }
+        }
     }
 }

@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import ai.kitt.snowboy.Constants;
 import ai.kitt.snowboy.MsgEnum;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -50,6 +51,10 @@ public class ServerService {
         call.clone().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                File hotwordExist = new File(Constants.PERSONAL_MODEL_GENERATED);
+                if(hotwordExist.exists()){
+                    hotwordExist.delete();
+                }
                 toDisk.writeFileToAsset(response.body());
 //                Toast.makeText(ctx,"연결됨", Toast.LENGTH_SHORT).show();
                 sendMessage(MsgEnum.MSG_MODEL_GENERATED,"");

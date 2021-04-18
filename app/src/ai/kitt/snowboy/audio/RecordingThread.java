@@ -59,9 +59,10 @@ public class RecordingThread {
         this.handler = handler;
         this.listener = listener;
 
-        detector.SetSensitivity("0.41");
+//        detector.SetSensitivity("0.51");
+        detector.SetSensitivity("0.48");
         detector.SetAudioGain(1f);
-        detector.ApplyFrontend(false);
+        detector.ApplyFrontend(true);
         try {
             player.setDataSource(strEnvWorkSpace+"ding.wav");
             player.prepare();
