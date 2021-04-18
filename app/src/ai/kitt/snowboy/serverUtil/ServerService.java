@@ -1,6 +1,8 @@
 package ai.kitt.snowboy.serverUtil;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -8,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import ai.kitt.snowboy.MsgEnum;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -18,15 +21,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ServerService {
-    AudioClient client;
     RetrofitService retrofitService;
     WriteResponseBodyToDisk toDisk;
     Context ctx;
+    Handler handler;
 
-    public ServerService(Context ctx) {
+    public ServerService(Context ctx, Handler handler) {
         this.ctx = ctx;
-        client = new AudioClient();
-        retrofitService = client.getRetrofitService(ctx);
+        this.handler = handler;
+        retrofitService = AudioClient.getRetrofitService(ctx);
         toDisk = new WriteResponseBodyToDisk();
     }
 
@@ -42,19 +45,27 @@ public class ServerService {
         parts.add(filePart2);
         parts.add(filePart3);
 
-        Call<ResponseBody> call = retrofitService.uploadAttachmentMutilple(parts);
+        Call<ResponseBody> call = retrofitService.uploadAttachmentMultiple(parts);
 
         call.clone().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 toDisk.writeFileToAsset(response.body());
-                Toast.makeText(ctx,"연결됨", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ctx,"연결됨", Toast.LENGTH_SHORT).show();
+                sendMessage(MsgEnum.MSG_MODEL_GENERATED,"");
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(ctx,"연결안됨", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ctx,"연결안됨", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void sendMessage(MsgEnum what, Object obj){
+        if (null != handler) {
+            Message msg = handler.obtainMessage(what.ordinal(), obj);
+            handler.sendMessage(msg);
+        }
     }
 }

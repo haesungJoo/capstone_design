@@ -18,25 +18,26 @@ import static android.content.ContentValues.TAG;
 
 public class WriteResponseBodyToDisk {
 
-    public static String HOTWORD_PATH = Constants.DEFAULT_WORK_SPACE + File.separatorChar;
+    public static String HOTWORD_DIR = Constants.DEFAULT_WORK_SPACE + File.separatorChar;
+    public static String HOTWORD_PATH = Constants.PERSONAL_MODEL_GENERATED;
 
     public boolean writeFileToAsset(ResponseBody body){
 
-        File dir = new File(HOTWORD_PATH);
+        File dir = new File(HOTWORD_DIR);
 
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
-                Log.e(TAG, "mkdir failed: "+HOTWORD_PATH);
+                Log.e(TAG, "mkdir failed: "+HOTWORD_DIR);
 //                return
             } else {
-                Log.i(TAG, "mkdir ok: "+HOTWORD_PATH);
+                Log.i(TAG, "mkdir ok: "+HOTWORD_DIR);
             }
         } else {
-            Log.w(TAG, HOTWORD_PATH+" already exists!");
+            Log.w(TAG, HOTWORD_DIR+" already exists!");
         }
 
         try{
-            File fromResponseBodyFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+"testHorword.pmdl");
+            File fromResponseBodyFile = new File(HOTWORD_PATH);
 
             InputStream inputStream = null;
             OutputStream outputStream = null;

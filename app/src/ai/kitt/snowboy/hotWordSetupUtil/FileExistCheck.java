@@ -33,19 +33,13 @@ public class FileExistCheck {
         return file;
     }
 
-    public void fileDelete(){
-        File file1 = filePathConnector(this.fileName1);
-        File file2 = filePathConnector(this.fileName2);
-        File file3 = filePathConnector(this.fileName3);
+    public void fileDelete(File... files){
+
         try{
-            if(file1.exists()){
-                file1.delete();
-            }
-            if(file2.exists()){
-                file2.delete();
-            }
-            if(file3.exists()){
-                file3.delete();
+            for(File file: files){
+                if(file.exists()){
+                    file.delete();
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

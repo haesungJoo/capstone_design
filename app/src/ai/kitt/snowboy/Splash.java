@@ -7,7 +7,10 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
+
 import ai.kitt.snowboy.demo.R;
+import ai.kitt.snowboy.hotWordSetupUtil.FileExistCheck;
 
 public class Splash extends Activity {
 
@@ -18,13 +21,29 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent spIntent = new Intent(Splash.this, HotwordSetupActivity.class);
-                startActivity(spIntent);
-                finish();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+        File file = new File(Constants.PERSONAL_MODEL_GENERATED);
+
+        // 모델을 이미 생성했다면, Demo쪽으로 바로 넘어가게
+        if(file.exists()){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent spIntent = new Intent(Splash.this, Demo.class);
+                    startActivity(spIntent);
+                    finish();
+                }
+            }, SPLASH_DISPLAY_LENGTH);
+        }
+        // 모델 생성 안했다면 모델을 생성하게끔..
+        else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent spIntent = new Intent(Splash.this, HotwordSetupActivity.class);
+                    startActivity(spIntent);
+                    finish();
+                }
+            }, SPLASH_DISPLAY_LENGTH);
+        }
     }
 }

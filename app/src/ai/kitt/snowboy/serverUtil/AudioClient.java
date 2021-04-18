@@ -20,12 +20,10 @@ public class AudioClient {
 
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
-//                    .baseUrl(context.getString(R.string.base_url)).client(client)
                     .baseUrl(context.getString(R.string.base_url))
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
-
         return retrofit;
     }
 

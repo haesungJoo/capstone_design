@@ -35,7 +35,8 @@ public class RecordingThread {
 //    private static final String TAG = "RecordingThread";
     private static final String ACTIVE_RES = Constants.ACTIVE_RES;
     // TODO 테스트 하기 위한 모델
-    private static final String ACTIVE_UMDL = Constants.TEST_PMDL;
+//    private static final String ACTIVE_UMDL = Constants.TEST_PMDL;
+    private static final String GENERATED_UMDL = Constants.PERSONAL_MODEL_GENERATED;
 //    private static final String ACTIVE_UMDL = Constants.ACTIVE_UMDL;
 
     private TimerThread timerThread = null;
@@ -48,7 +49,7 @@ public class RecordingThread {
     private Thread thread;
     
     private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
-    private String activeModel = strEnvWorkSpace+ACTIVE_UMDL;    
+    private String activeModel = GENERATED_UMDL;
     private String commonRes = strEnvWorkSpace+ACTIVE_RES;
     
     private SnowboyDetect detector = new SnowboyDetect(commonRes, activeModel);

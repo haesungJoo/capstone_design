@@ -11,13 +11,34 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import ai.kitt.snowboy.demo.R;
 import ai.kitt.snowboy.hotWordSetupUtil.FileExistCheck;
 import ai.kitt.snowboy.hotWordSetupUtil.RecordAudioForServer;
+import ai.kitt.snowboy.serverUtil.AudioClient;
+import ai.kitt.snowboy.serverUtil.RetrofitService;
+import ai.kitt.snowboy.serverUtil.ServerService;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class HotwordSetupActivity extends AppCompatActivity {
 
@@ -41,6 +62,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
 
     private RecordAudioForServer recordAudioForServer = null;
     private FileExistCheck fileExistCheck = null;
+    private ServerService serverService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,15 +160,38 @@ public class HotwordSetupActivity extends AppCompatActivity {
 
     public void result_btn_clicked(View view){
 
-
-
         FileExistCheck fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
-        fileExistCheck.fileDelete();
 
-        Intent spIntent = new Intent(HotwordSetupActivity.this, Demo.class);
-        startActivity(spIntent);
-        finish();
+        File file1 = fileExistCheck.filePathConnector("record1.wav");
+        File file2 = fileExistCheck.filePathConnector("record2.wav");
+        File file3 = fileExistCheck.filePathConnector("record3.wav");
+
+        serverService = new ServerService(HotwordSetupActivity.this, handler);
+        serverService.requestUploadMultiple(file1, file2, file3);
+
+//        녹음한 파일 3개 제거
+//        fileExistCheck.fileDelete(file1, file2, file3);
     }
+
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            MsgEnum message = MsgEnum.getMsgEnum(msg.what);
+
+            switch (message){
+                case MSG_MODEL_GENERATED:
+//                    Toast.makeText(HotwordSetupActivity.this, "화면 넘김 성공.", Toast.LENGTH_SHORT).show();
+                    Intent spIntent = new Intent(HotwordSetupActivity.this, Demo.class);
+                    startActivity(spIntent);
+                    finish();
+                    break;
+                default:
+                    Toast.makeText(HotwordSetupActivity.this, "화면 넘김을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     private boolean checkPermissionFromDevice(String[] permissions){
 

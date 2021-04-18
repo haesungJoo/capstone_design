@@ -12,5 +12,5 @@ import retrofit2.http.Part;
 public interface RetrofitService {
     @Multipart
     @POST("test/")
-    Call<ResponseBody> uploadAttachmentMutilple(@Part List<MultipartBody.Part> fileParts);
+    Call<ResponseBody> uploadAttachmentMultiple(@Part List<MultipartBody.Part> fileParts);
 }
