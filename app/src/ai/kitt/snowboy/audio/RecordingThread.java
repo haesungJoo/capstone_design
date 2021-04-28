@@ -35,22 +35,22 @@ public class RecordingThread {
 //    private static final String TAG = "RecordingThread";
     private static final String ACTIVE_RES = Constants.ACTIVE_RES;
     // TODO 테스트 하기 위한 모델
-//    private static final String ACTIVE_UMDL = Constants.TEST_PMDL;
+    private static final String ACTIVE_MDL = Constants.TEST_PMDL;
     private static final String GENERATED_UMDL = Constants.PERSONAL_MODEL_GENERATED;
 //    private static final String ACTIVE_UMDL = Constants.ACTIVE_UMDL;
 
     private TimerThread timerThread = null;
 
     private boolean shouldContinue;
-    private boolean isWordDetected = false; // TimerThread에 의해서 3초동안의 파일 저장을 위한 flag
-    private boolean isDetecting = true; // 인식되고 난 후에, TimerThread에 의해서 녹음될동안 잠시 인식을 멈춤
+    private boolean isWordDetected = false; // TimerThread에 의해서 2초동안의 파일 저장을 위한 flag
     private AudioDataReceivedListener listener = null;
     private TimerDataSaver timer_listener = null;
     private Handler handler = null;
     private Thread thread;
     
     private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
-    private String activeModel = GENERATED_UMDL;
+    //private String activeModel = GENERATED_UMDL;
+    private String activeModel = strEnvWorkSpace+ACTIVE_MDL;
     private String commonRes = strEnvWorkSpace+ACTIVE_RES;
     
     private SnowboyDetect detector = new SnowboyDetect(commonRes, activeModel);
@@ -61,9 +61,9 @@ public class RecordingThread {
         this.listener = listener;
 
 //        detector.SetSensitivity("0.51");
-        detector.SetSensitivity("0.49");
+        detector.SetSensitivity("0.6");
         detector.SetAudioGain(1f);
-        detector.ApplyFrontend(false);
+        detector.ApplyFrontend(true);
         try {
             player.setDataSource(strEnvWorkSpace+"ding.wav");
             player.prepare();
@@ -157,10 +157,7 @@ public class RecordingThread {
             shortsRead += audioData.length;
 
             // Snowboy hotword detection.
-            int result = -2;
-            if(isDetecting){
-                result = detector.RunDetection(audioData, audioData.length);
-            }
+            int result = detector.RunDetection(audioData, audioData.length);
 
             if (result == -2) {
                 // post a higher CPU usage:
@@ -178,7 +175,6 @@ public class RecordingThread {
 
                 timerThread.timer();
                 timer_listener.start();
-                isDetecting = false; // 한번 인식 되면 3초동안의 음성을 저장하는 동안 hotword 인식을 멈춘다.
                 isWordDetected = true; // 타이머의 시작과 동시에 녹음이 시작하게 한다.
 
                 Log.i("Snowboy: ", "Hotword " + Integer.toString(result) + " detected!");
@@ -202,7 +198,6 @@ public class RecordingThread {
 
             switch (message){
                 case MSG_STOP:
-                    isDetecting = true; // 3초동안의 음성을 저장하면, 음성인식을 시작한다.
                     msg_timer = handler.obtainMessage(MsgEnum.MSG_STOP.ordinal(), timer_listener.stop_timer());
                     isWordDetected = false; // 3초 뒤에 녹음이 멈추게끔 한다.
                     break;
