@@ -53,7 +53,6 @@ public class HotwordSetupActivity extends AppCompatActivity {
             Manifest.permission.INTERNET
     };
     private final static int REQUEST_PERMISSION_CODE = 1000;
-    boolean btn_result_flag = false;
 
     Button btn_record_first;
     Button btn_record_second;
@@ -85,7 +84,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
         btn_result = findViewById(R.id.btn_result);
         tv_result = findViewById(R.id.tv_result);
 
-        btn_result.setEnabled(btn_result_flag);
+        btn_result.setEnabled(false);
     }
 
     private void sleep() {
@@ -170,16 +169,24 @@ public class HotwordSetupActivity extends AppCompatActivity {
                 case MSG_MODEL_GENERATED:
 //                    Toast.makeText(HotwordSetupActivity.this, "화면 넘김 성공.", Toast.LENGTH_SHORT).show();
 
-                    File file1 = fileExistCheck.filePathConnector("record1.wav");
-                    File file2 = fileExistCheck.filePathConnector("record2.wav");
-                    File file3 = fileExistCheck.filePathConnector("record3.wav");
-
-//                    녹음한 파일 3개 제거
-                    fileExistCheck.fileDelete(file1, file2, file3);
+                    fileExistDelete();
 
                     Intent spIntent = new Intent(HotwordSetupActivity.this, Demo.class);
                     startActivity(spIntent);
                     finish();
+                    break;
+                case MSG_ERROR_NOFILE:
+                    Toast.makeText(getApplicationContext(), "파일이 잘못 저장된거 같습니다.\n처음부터 다시 녹음해주세요.", Toast.LENGTH_SHORT).show();
+                    fileExistDelete();
+                    btn_result.setEnabled(false);
+                    break;
+                case MSG_ERROR_SHORT_HOTWORD:
+                    Toast.makeText(getApplicationContext(), "녹음한 파일의 길이가 너무 짧습니다.\n처음부터 다시 녹음해주세요.", Toast.LENGTH_SHORT).show();
+                    fileExistDelete();
+                    btn_result.setEnabled(false);
+                    break;
+                case MSG_ERROR:
+                    Toast.makeText(getApplicationContext(), "fail파트", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Toast.makeText(HotwordSetupActivity.this, "화면 넘김을 실패했습니다.", Toast.LENGTH_SHORT).show();
@@ -188,6 +195,15 @@ public class HotwordSetupActivity extends AppCompatActivity {
             super.handleMessage(msg);
         }
     };
+
+    private void fileExistDelete(){
+        File file1 = fileExistCheck.filePathConnector("record1.wav");
+        File file2 = fileExistCheck.filePathConnector("record2.wav");
+        File file3 = fileExistCheck.filePathConnector("record3.wav");
+
+//                    녹음한 파일 3개 제거
+        fileExistCheck.fileDelete(file1, file2, file3);
+    }
 
     private boolean checkPermissionFromDevice(String[] permissions){
 

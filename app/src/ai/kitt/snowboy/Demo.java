@@ -203,12 +203,14 @@ public class Demo extends Activity {
                         emotion = "오류";
                         break;
                 }
+
+                Toast.makeText(getApplicationContext(), "현재 감정 : "+emotion, Toast.LENGTH_SHORT).show();
             }
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
                 case MSG_ACTIVE:
-                    activeTimes++;
-                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+//                    activeTimes++;
+//                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_INFO:
                     Toast.makeText(Demo.this, "MSG_INFO", Toast.LENGTH_SHORT).show();

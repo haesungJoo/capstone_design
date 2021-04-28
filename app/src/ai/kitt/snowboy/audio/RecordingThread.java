@@ -42,7 +42,8 @@ public class RecordingThread {
     private TimerThread timerThread = null;
 
     private boolean shouldContinue;
-    private boolean isWordDetected = false; // TimerThread에 의해서 2초동안의 파일 저장을 위한 flag
+    private boolean isWordDetected = false; // TimerThread에 의해서 3초동안의 파일 저장을 위한 flag
+    private boolean isDetecting = true; // 인식되고 난 후에, TimerThread에 의해서 녹음될동안 잠시 인식을 멈춤
     private AudioDataReceivedListener listener = null;
     private TimerDataSaver timer_listener = null;
     private Handler handler = null;
@@ -60,9 +61,9 @@ public class RecordingThread {
         this.listener = listener;
 
 //        detector.SetSensitivity("0.51");
-        detector.SetSensitivity("0.48");
+        detector.SetSensitivity("0.49");
         detector.SetAudioGain(1f);
-        detector.ApplyFrontend(true);
+        detector.ApplyFrontend(false);
         try {
             player.setDataSource(strEnvWorkSpace+"ding.wav");
             player.prepare();
@@ -156,7 +157,10 @@ public class RecordingThread {
             shortsRead += audioData.length;
 
             // Snowboy hotword detection.
-            int result = detector.RunDetection(audioData, audioData.length);
+            int result = -2;
+            if(isDetecting){
+                result = detector.RunDetection(audioData, audioData.length);
+            }
 
             if (result == -2) {
                 // post a higher CPU usage:
@@ -174,6 +178,7 @@ public class RecordingThread {
 
                 timerThread.timer();
                 timer_listener.start();
+                isDetecting = false; // 한번 인식 되면 3초동안의 음성을 저장하는 동안 hotword 인식을 멈춘다.
                 isWordDetected = true; // 타이머의 시작과 동시에 녹음이 시작하게 한다.
 
                 Log.i("Snowboy: ", "Hotword " + Integer.toString(result) + " detected!");
@@ -197,6 +202,7 @@ public class RecordingThread {
 
             switch (message){
                 case MSG_STOP:
+                    isDetecting = true; // 3초동안의 음성을 저장하면, 음성인식을 시작한다.
                     msg_timer = handler.obtainMessage(MsgEnum.MSG_STOP.ordinal(), timer_listener.stop_timer());
                     isWordDetected = false; // 3초 뒤에 녹음이 멈추게끔 한다.
                     break;

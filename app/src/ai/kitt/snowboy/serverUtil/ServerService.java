@@ -51,6 +51,13 @@ public class ServerService {
         call.clone().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.body().byteStream().toString().contains("ShortError")){
+                    sendMessage(MsgEnum.MSG_ERROR_SHORT_HOTWORD, "");
+                    return;
+                }else if(response.body().byteStream().toString().contains("IOError")){
+                    sendMessage(MsgEnum.MSG_ERROR_NOFILE, "");
+                    return;
+                }
                 File hotwordExist = new File(Constants.PERSONAL_MODEL_GENERATED);
                 if(hotwordExist.exists()){
                     hotwordExist.delete();
@@ -62,6 +69,7 @@ public class ServerService {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(MsgEnum.MSG_ERROR, "");
 //                Toast.makeText(ctx,"연결안됨", Toast.LENGTH_SHORT).show();
             }
         });

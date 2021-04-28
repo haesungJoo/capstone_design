@@ -14,7 +14,9 @@ public enum  MsgEnum {
     MSG_TIMER,
     MSG_STOP,
     MSG_TIMER_ERROR,
-    MSG_MODEL_GENERATED;
+    MSG_MODEL_GENERATED,
+    MSG_ERROR_SHORT_HOTWORD,
+    MSG_ERROR_NOFILE;
 
     public static MsgEnum getMsgEnum(int i) {
         return MsgEnum.values()[i];
