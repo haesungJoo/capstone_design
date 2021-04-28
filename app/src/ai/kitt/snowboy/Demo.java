@@ -5,23 +5,28 @@ import ai.kitt.snowboy.audio.RecordingThread;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 
-import java.io.File;
+import androidx.annotation.RequiresApi;
+
 import java.io.IOException;
 
 import java.util.List;
@@ -46,10 +51,11 @@ public class Demo extends Activity {
     private Button record_button;
     private Button play_button;
     private Button siren_button;
-    private Button btn_model_regenerate;
+    private Button explain_button;
 
     private AlertTime alertTime;
     private SirenSound sirenSound;
+    private int preVolume = -1;
 
     private static long activeTimes = 0;
 
@@ -67,6 +73,8 @@ public class Demo extends Activity {
 
         alertTime = new AlertTime(this);
         sirenSound = new SirenSound(this);
+
+//        setProperVolume(); //
 
         AppResCopy.copyResFromAssetsToSD(this);
         
@@ -94,8 +102,11 @@ public class Demo extends Activity {
         siren_button.setOnClickListener(siren_button_handle);
         siren_button.setEnabled(true);
 
-        btn_model_regenerate = (Button) findViewById(R.id.btn_model_regenerate);
-        btn_model_regenerate.setOnClickListener(btn_model_regenerate_handle);
+        explain_button = (Button) findViewById(R.id.btn_explain);
+        explain_button.setOnClickListener(explain_button_handle);
+        explain_button.setEnabled(true);
+
+
     }
     
     private void startRecording() {
@@ -113,6 +124,7 @@ public class Demo extends Activity {
         } catch (Exception e) {}
     }
 
+    
     private OnClickListener record_button_handle = new OnClickListener() {
         // @Override
         public void onClick(View arg0) {
@@ -134,32 +146,47 @@ public class Demo extends Activity {
     };
 
     private OnClickListener siren_button_handle = new OnClickListener() {
-        // @Override
+        @Override
         public void onClick(View arg0) {
             if(sirenSound.is_ing==false){
+                setProperVolume();
                 sirenSound.startSiren();
                 siren_button.setText("사이렌 끄기");
             }
             else if(sirenSound.is_ing==true){
+                restoreVolume();
                 sirenSound.stopSiren();
                 siren_button.setText("사이렌 울리기");
             }
         }
     };
 
-    private OnClickListener btn_model_regenerate_handle = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            File file = new File(Constants.PERSONAL_MODEL_GENERATED);
-            if(file.exists()){
-                file.delete();
-            }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setProperVolume() {
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        preVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int properVolume = (int) ((float) maxVolume);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, properVolume, 0);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    }
 
-            Intent intent = new Intent(Demo.this, HotwordSetupActivity.class);
+    private void restoreVolume() {
+        if(preVolume>=0) {
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, preVolume, 0);
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        }
+    }
+
+    private OnClickListener explain_button_handle = new OnClickListener() {
+        // @Override
+        public void onClick(View arg0) {
+            Intent intent = new Intent(Demo.this, Explain_activity.class);
             startActivity(intent);
-            finish();
         }
     };
+
 
     public Handler handle = new Handler() {
         @SuppressLint("HandlerLeak")
@@ -196,6 +223,7 @@ public class Demo extends Activity {
                         emotion = "행복";
                         break;
                     case 3:
+                        alertTime.sendMms_alert(filePath);
                         emotion = "두려움";
                         //jm control
                         break;
@@ -203,14 +231,12 @@ public class Demo extends Activity {
                         emotion = "오류";
                         break;
                 }
-
-                Toast.makeText(getApplicationContext(), "현재 감정 : "+emotion, Toast.LENGTH_SHORT).show();
             }
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
                 case MSG_ACTIVE:
-//                    activeTimes++;
-//                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    activeTimes++;
+                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_INFO:
                     Toast.makeText(Demo.this, "MSG_INFO", Toast.LENGTH_SHORT).show();
@@ -225,7 +251,7 @@ public class Demo extends Activity {
                     Toast.makeText(Demo.this, "MSG_ERROR", Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_STOP:
-//                    Toast.makeText(Demo.this, "MSG_STOP", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Demo.this, "MSG_STOP", Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_TIMER_ERROR:
                     Toast.makeText(Demo.this, "MSG_TIMER_ERROR", Toast.LENGTH_SHORT).show();
