@@ -12,6 +12,7 @@ import androidx.core.content.FileProvider;
 
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
+import com.klinker.android.send_message.Transaction;
 
 import org.tensorflow.lite.support.common.FileUtil;
 
@@ -91,8 +92,6 @@ public class SmsSend {
 
         transaction.sendNewMessage(message, id);
     }
-
-
     /*public void sendMms(String filepath, String msg, String phoneNo){
 
         Intent sendIntent = new Intent(Intent.ACTION_SEND);
@@ -108,6 +107,4 @@ public class SmsSend {
         sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
         mContext.startActivity(sendIntent);
     }*/
-
-
 }

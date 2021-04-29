@@ -51,7 +51,6 @@ public class Demo extends Activity {
     private Button record_button;
     private Button play_button;
     private Button siren_button;
-    private Button explain_button;
 
     private AlertTime alertTime;
     private SirenSound sirenSound;
@@ -101,12 +100,6 @@ public class Demo extends Activity {
         siren_button = (Button) findViewById(R.id.btn_ciren);
         siren_button.setOnClickListener(siren_button_handle);
         siren_button.setEnabled(true);
-
-        explain_button = (Button) findViewById(R.id.btn_explain);
-        explain_button.setOnClickListener(explain_button_handle);
-        explain_button.setEnabled(true);
-
-
     }
     
     private void startRecording() {
@@ -161,7 +154,6 @@ public class Demo extends Activity {
         }
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void setProperVolume() {
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         preVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -178,15 +170,6 @@ public class Demo extends Activity {
             int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         }
     }
-
-    private OnClickListener explain_button_handle = new OnClickListener() {
-        // @Override
-        public void onClick(View arg0) {
-            Intent intent = new Intent(Demo.this, Explain_activity.class);
-            startActivity(intent);
-        }
-    };
-
 
     public Handler handle = new Handler() {
         @SuppressLint("HandlerLeak")

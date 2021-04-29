@@ -35,7 +35,7 @@ public class RecordingThread {
 //    private static final String TAG = "RecordingThread";
     private static final String ACTIVE_RES = Constants.ACTIVE_RES;
     // TODO 테스트 하기 위한 모델
-    private static final String ACTIVE_MDL = Constants.TEST_PMDL;
+//    private static final String ACTIVE_MDL = Constants.TEST_PMDL;
     private static final String GENERATED_UMDL = Constants.PERSONAL_MODEL_GENERATED;
 //    private static final String ACTIVE_UMDL = Constants.ACTIVE_UMDL;
 
@@ -49,8 +49,8 @@ public class RecordingThread {
     private Thread thread;
     
     private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
-    //private String activeModel = GENERATED_UMDL;
-    private String activeModel = strEnvWorkSpace+ACTIVE_MDL;
+    private String activeModel = GENERATED_UMDL;
+//    private String activeModel = strEnvWorkSpace+ACTIVE_MDL;
     private String commonRes = strEnvWorkSpace+ACTIVE_RES;
     
     private SnowboyDetect detector = new SnowboyDetect(commonRes, activeModel);
@@ -61,9 +61,9 @@ public class RecordingThread {
         this.listener = listener;
 
 //        detector.SetSensitivity("0.51");
-        detector.SetSensitivity("0.6");
+        detector.SetSensitivity("0.49");
         detector.SetAudioGain(1f);
-        detector.ApplyFrontend(true);
+        detector.ApplyFrontend(false);
         try {
             player.setDataSource(strEnvWorkSpace+"ding.wav");
             player.prepare();
