@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="app_name">IAI PROTOTYPE</string>
+    <string name="app_name">구해줘</string>
 
     <string name="btn_actionstart">기능켜기</string>
     <string name="btn_actionstop">기능끄끼</string>
@@ -20,7 +20,7 @@
     <string name="hotword_setup_title_bef">당신의 음성을 녹음해주세요.</string>
     <string name="hotword_setup_title_aft">모델 생성 버튼을 눌러주세요.</string>
 
-<!--main layout-->
+    <!--main layout-->
     <string name="siren_on">사이렌 울리기</string>
     <string name="siren_off">사이렌 종료하기</string>
 </resources>
