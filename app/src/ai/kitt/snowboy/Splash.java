@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import java.io.File;
 
 import ai.kitt.snowboy.demo.R;
+import ai.kitt.snowboy.explainSplash.ExplainSplash;
 import ai.kitt.snowboy.hotWordSetupUtil.FileExistCheck;
 
 public class Splash extends Activity {
@@ -39,7 +40,10 @@ public class Splash extends Activity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent spIntent = new Intent(Splash.this, HotwordSetupActivity.class);
+//                    Intent spIntent = new Intent(Splash.this, HotwordSetupActivity.class);
+//                    startActivity(spIntent);
+//                    finish();
+                    Intent spIntent = new Intent(Splash.this, ExplainSplash.class);
                     startActivity(spIntent);
                     finish();
                 }

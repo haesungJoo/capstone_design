@@ -1,13 +1,16 @@
 package ai.kitt.snowboy.audio;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.lang.Object;
 
 import ai.kitt.snowboy.Constants;
 import ai.kitt.snowboy.MsgEnum;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -15,8 +18,11 @@ import android.media.MediaPlayer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.LinearLayout;
+
+import androidx.core.content.ContextCompat;
 
 import ai.kitt.snowboy.SnowboyDetect;
 import ai.kitt.snowboy.util.TimerDataSaver;
@@ -48,24 +54,24 @@ public class RecordingThread {
     
     private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
     private String activeModel = GENERATED_UMDL;
-    private String commonRes = strEnvWorkSpace+ACTIVE_RES;
-    
+    private String commonRes = strEnvWorkSpace+ File.separatorChar+ ACTIVE_RES;
+
     private SnowboyDetect detector = new SnowboyDetect(commonRes, activeModel);
-    private MediaPlayer player = new MediaPlayer();
+//    private MediaPlayer player = new MediaPlayer();
 
     public RecordingThread(Handler handler, AudioDataReceivedListener listener) {
         this.handler = handler;
         this.listener = listener;
 
-        detector.SetSensitivity("0.49");
+        detector.SetSensitivity("0.46");
         detector.SetAudioGain(1f);
         detector.ApplyFrontend(false);
-        try {
-            player.setDataSource(strEnvWorkSpace+"ding.wav");
-            player.prepare();
-        } catch (IOException e) {
-            Log.e(TAG, "Playing ding sound error", e);
-        }
+//        try {
+//            player.setDataSource(strEnvWorkSpace+"ding.wav");
+//            player.prepare();
+//        } catch (IOException e) {
+//            Log.e(TAG, "Playing ding sound error", e);
+//        }
 
         timerThread = new TimerThread(timer_handler);
         timer_listener = new TimerDataSaver();
@@ -170,7 +176,7 @@ public class RecordingThread {
                 sendMessage(MsgEnum.MSG_ACTIVE, null);
 
                 // ding 소리 나는 부분
-                player.start();
+//                player.start();
 
                 timerThread.timer();
                 timer_listener.start();

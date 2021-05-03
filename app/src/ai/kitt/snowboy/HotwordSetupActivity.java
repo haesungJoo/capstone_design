@@ -14,9 +14,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +60,15 @@ public class HotwordSetupActivity extends AppCompatActivity {
     Button btn_record_second;
     Button btn_record_third;
     Button btn_result;
-    TextView tv_result;
+
+    TextView tv_record_first;
+    TextView tv_record_second;
+    TextView tv_record_third;
+    TextView tv_model_generate_result;
+    TextView tv_hotword_setup_title;
+
+    LinearLayout ll_model_generate_view;
+    LinearLayout ll_record_btns_group;
 
     private RecordAudioForServer recordAudioForServer = null;
     private FileExistCheck fileExistCheck = null;
@@ -82,9 +92,17 @@ public class HotwordSetupActivity extends AppCompatActivity {
         btn_record_second = findViewById(R.id.btn_record_second);
         btn_record_third = findViewById(R.id.btn_record_third);
         btn_result = findViewById(R.id.btn_result);
-        tv_result = findViewById(R.id.tv_result);
 
-        btn_result.setEnabled(false);
+        tv_record_first = findViewById(R.id.tv_record_first);
+        tv_record_second = findViewById(R.id.tv_record_second);
+        tv_record_third = findViewById(R.id.tv_record_third);
+        tv_model_generate_result = findViewById(R.id.tv_model_generate_result);
+        tv_hotword_setup_title = findViewById(R.id.tv_hotword_setup_title);
+
+        ll_model_generate_view = findViewById(R.id.ll_model_generate_view);
+        ll_record_btns_group = findViewById(R.id.ll_record_btns_group);
+
+//        btn_result.setEnabled(false);
     }
 
     private void sleep() {
@@ -96,58 +114,59 @@ public class HotwordSetupActivity extends AppCompatActivity {
         recordAudioForServer = new RecordAudioForServer(fileName);
     }
 
-    public void startRecording(String fileName, Button button_record){
+    public void startRecording(String fileName, Button btn_record, TextView tv_record){
         recordAudioThreadInit(fileName);
         recordAudioForServer.startRecording();
-        button_record.setText(R.string.stop_record);
+        btn_record.setBackgroundResource(R.drawable.btn_recording_aft);
+        tv_record.setText(R.string.stop_record);
     }
 
-    public void stopRecording(Button button_record){
+    public void stopRecording(Button btn_record, TextView tv_record){
         recordAudioForServer.stopRecording();
-        button_record.setText(R.string.start_record);
+        btn_record.setBackgroundResource(R.drawable.btn_recording_bef);
+        tv_record.setText(R.string.start_record);
     }
 
     public void first_btn_record(View view){
-        if(btn_record_first.getText().toString().equals(getResources().getString(R.string.start_record))){
+        if(tv_record_first.getText().toString().equals(getResources().getString(R.string.start_record))){
             sleep();
-            startRecording("record1.pcm", btn_record_first);
+            startRecording("record1.pcm", btn_record_first, tv_record_first);
+
         }else{
-            stopRecording(btn_record_first);
+            stopRecording(btn_record_first, tv_record_first);
             sleep();
 
-            // 3개의 파일이 존재하는지 확인
-            fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
-            btn_result.setEnabled(fileExistCheck.fileExist());
+            isFileExistThanAction();
         }
     }
 
     public void second_btn_record(View view){
-        if(btn_record_second.getText().toString().equals(getResources().getString(R.string.start_record))){
+        if(tv_record_second.getText().toString().equals(getResources().getString(R.string.start_record))){
             sleep();
-            startRecording("record2.pcm", btn_record_second);
+            startRecording("record2.pcm", btn_record_second, tv_record_second);
         }else{
-            stopRecording(btn_record_second);
+            stopRecording(btn_record_second, tv_record_second);
             sleep();
 
-            fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
-            btn_result.setEnabled(fileExistCheck.fileExist());
+            isFileExistThanAction();
         }
     }
 
     public void third_btn_record(View view){
-        if(btn_record_third.getText().toString().equals(getResources().getString(R.string.start_record))){
+        if(tv_record_third.getText().toString().equals(getResources().getString(R.string.start_record))){
             sleep();
-            startRecording("record3.pcm", btn_record_third);
+            startRecording("record3.pcm", btn_record_third, tv_record_third);
         }else{
-            stopRecording(btn_record_third);
+            stopRecording(btn_record_third, tv_record_third);
             sleep();
 
-            fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
-            btn_result.setEnabled(fileExistCheck.fileExist());
+            isFileExistThanAction();
         }
     }
 
     public void result_btn_clicked(View view){
+
+        tv_model_generate_result.setText(R.string.hotword_generating_button);
 
         FileExistCheck fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
 
@@ -157,7 +176,41 @@ public class HotwordSetupActivity extends AppCompatActivity {
 
         serverService = new ServerService(HotwordSetupActivity.this, handler);
         serverService.requestUploadMultiple(file1, file2, file3);
+    }
 
+    // 모델을 생성하기 위한 파일이 모두 있을경우 공통된 동작
+    // 1. 3개의 파일이 있는지 없는지 모두 확인
+    // 2. 파일이 모두 있다면 -> 음성녹음 layout INVISIBLE, 모델생성 페이지 VISIBLE
+    // 3. 파일이 모두 없다면 -> 현상유지
+    public void isFileExistThanAction(){
+        fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
+        if(fileExistCheck.fileExist()){
+            ll_record_btns_group.setVisibility(View.INVISIBLE);
+            try{
+                Thread.sleep(300);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            tv_hotword_setup_title.setText(R.string.hotword_setup_title_aft);
+            ll_model_generate_view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // 모델을 생성하는데 실패했을경우 하는 공통된 동작
+    // 1. 파일 모두 지우고
+    // 2. 모델 생성 layout INVISIBLE
+    // 3. 음성 파일 생성하는 layout VISIBLE
+    public void isGeneratingModelFailedThanAction(){
+        fileExistDelete();
+        tv_model_generate_result.setText(R.string.hotword_adapt_button);
+        tv_hotword_setup_title.setText(R.string.hotword_setup_title_bef);
+        ll_model_generate_view.setVisibility(View.INVISIBLE);
+        try{
+            Thread.sleep(300);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        ll_record_btns_group.setVisibility(View.VISIBLE);
     }
 
     public Handler handler = new Handler(){
@@ -169,6 +222,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
                 case MSG_MODEL_GENERATED:
 //                    Toast.makeText(HotwordSetupActivity.this, "화면 넘김 성공.", Toast.LENGTH_SHORT).show();
 
+                    tv_model_generate_result.setText(R.string.hotword_adapt_button);
                     fileExistDelete();
 
                     Intent spIntent = new Intent(HotwordSetupActivity.this, Demo.class);
@@ -177,16 +231,18 @@ public class HotwordSetupActivity extends AppCompatActivity {
                     break;
                 case MSG_ERROR_NOFILE:
                     Toast.makeText(getApplicationContext(), "파일이 잘못 저장된거 같습니다.\n처음부터 다시 녹음해주세요.", Toast.LENGTH_SHORT).show();
-                    fileExistDelete();
-                    btn_result.setEnabled(false);
+
+                    isGeneratingModelFailedThanAction();
                     break;
                 case MSG_ERROR_SHORT_HOTWORD:
                     Toast.makeText(getApplicationContext(), "녹음한 파일의 길이가 너무 짧습니다.\n처음부터 다시 녹음해주세요.", Toast.LENGTH_SHORT).show();
-                    fileExistDelete();
-                    btn_result.setEnabled(false);
+
+                    isGeneratingModelFailedThanAction();
                     break;
                 case MSG_ERROR:
-                    Toast.makeText(getApplicationContext(), "fail파트", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "모델 생성에 실패했습니다.\n처음부터 다시 녹음해주세요.", Toast.LENGTH_SHORT).show();
+
+                    isGeneratingModelFailedThanAction();
                     break;
                 default:
                     Toast.makeText(HotwordSetupActivity.this, "화면 넘김을 실패했습니다.", Toast.LENGTH_SHORT).show();
@@ -221,7 +277,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
         switch (requestCode){
             case REQUEST_PERMISSION_CODE:
                 for(int grant: grantResults){
-                    if(grant != 0){
+                    if(grant != PackageManager.PERMISSION_GRANTED){
                         finish();
                     }
                 }

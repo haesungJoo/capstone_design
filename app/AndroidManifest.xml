@@ -24,11 +24,15 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="ai.kitt.snowboy.HotwordSetupActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name="ai.kitt.snowboy.explainSplash.ExplainSplash"></activity>
+        <activity
+            android:name=".NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/NoActionBar"></activity>
         <activity android:name="ai.kitt.snowboy.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,32 +40,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ai.kitt.snowboy.HotwordSetupActivity" />
         <activity
             android:name="ai.kitt.snowboy.Demo"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
+
         <service android:name="com.android.mms.transaction.TransactionService" />
     </application>
-
-<!--    <application-->
-<!--        android:icon="@mipmap/ic_launcher"-->
-<!--        android:label="@string/app_name">-->
-<!--        <activity-->
-<!--            android:name="ai.kitt.snowboy.Demo"-->
-<!--            android:label="@string/app_name"-->
-<!--            android:windowSoftInputMode="stateHidden">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-<!--        <activity android:name="ai.kitt.snowboy.HotwordSetupActivity" />-->
-<!--        <activity android:name="ai.kitt.snowboy.Splash" />-->
-<!--        <activity android:name="ai.kitt.snowboy.Explain_activity"-->
-<!--            android:theme="@style/Theme.AppCompat" />-->
-<!--        <service android:name="com.android.mms.transaction.TransactionService" />-->
-<!--    </application>-->
 
 </manifest>

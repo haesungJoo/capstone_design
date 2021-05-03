@@ -16,12 +16,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -54,6 +56,11 @@ public class Demo extends Activity {
     private Button siren_button;
     private Button btn_model_regenerate;
 
+    private TextView tv_model_regenerate;
+    private TextView tv_siren;
+    private TextView tv_sue;
+    private TextView tv_start;
+
     private AlertTime alertTime;
     private SirenSound sirenSound;
     private int preVolume = -1;
@@ -65,6 +72,8 @@ public class Demo extends Activity {
     private TimerThread timerThread;
     private Classifier mClassifier; // commit message를 위한 변경
 
+    private Vibrator vibrator;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,14 +84,14 @@ public class Demo extends Activity {
         alertTime = new AlertTime(this);
         sirenSound = new SirenSound(this);
 
-//        setProperVolume(); //
-
         AppResCopy.copyResFromAssetsToSD(this);
         
         activeTimes = 0;
         // 여기부터
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
         timerThread = new TimerThread(handle);
+
+        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
     }
     
     void showToast(CharSequence msg) {
@@ -98,9 +107,14 @@ public class Demo extends Activity {
         play_button.setOnClickListener(selfsue_button_handle);
         play_button.setEnabled(true);
 
-        siren_button = (Button) findViewById(R.id.btn_ciren);
+        siren_button = (Button) findViewById(R.id.btn_siren);
         siren_button.setOnClickListener(siren_button_handle);
         siren_button.setEnabled(true);
+
+        tv_model_regenerate = findViewById(R.id.tv_model_regenerate);
+        tv_siren = findViewById(R.id.tv_siren);
+        tv_sue = findViewById(R.id.tv_sue);
+        tv_start = findViewById(R.id.tv_start);
 
         btn_model_regenerate = (Button) findViewById(R.id.btn_model_regenerate);
         btn_model_regenerate.setOnClickListener(btn_model_regenerate_handle);
@@ -108,12 +122,12 @@ public class Demo extends Activity {
     
     private void startRecording() {
         recordingThread.startRecording();
-        record_button.setText(R.string.btn_actionstop);
+        tv_start.setText(R.string.btn_actionstop);
     }
 
     private void stopRecording() {
         recordingThread.stopRecording();
-        record_button.setText(R.string.btn_actionstart);
+        tv_start.setText(R.string.btn_actionstart);
     }
 
     private void sleep() {
@@ -125,12 +139,14 @@ public class Demo extends Activity {
     private OnClickListener record_button_handle = new OnClickListener() {
         // @Override
         public void onClick(View arg0) {
-            if(record_button.getText().equals(getResources().getString(R.string.btn_actionstart))) {
+            if(tv_start.getText().equals(getResources().getString(R.string.btn_actionstart))) {
                 sleep();
                 startRecording();
+                record_button.setBackgroundResource(R.drawable.btn_detecting_function_background_aft);
             } else {
                 stopRecording();
                 sleep();
+                record_button.setBackgroundResource(R.drawable.btn_detecting_function_background_bef);
             }
         }
     };
@@ -148,12 +164,14 @@ public class Demo extends Activity {
             if(sirenSound.is_ing==false){
                 setProperVolume();
                 sirenSound.startSiren();
-                siren_button.setText("사이렌 끄기");
+                tv_siren.setText(R.string.siren_off);
+                siren_button.setBackgroundResource(R.drawable.btn_siren_background_aft);
             }
             else if(sirenSound.is_ing==true){
                 restoreVolume();
                 sirenSound.stopSiren();
-                siren_button.setText("사이렌 울리기");
+                tv_siren.setText(R.string.siren_on);
+                siren_button.setBackgroundResource(R.drawable.btn_siren_background_bef);
             }
         }
     };
@@ -161,14 +179,32 @@ public class Demo extends Activity {
     private OnClickListener btn_model_regenerate_handle = new OnClickListener() {
         @Override
         public void onClick(View view) {
-            File file = new File(Constants.PERSONAL_MODEL_GENERATED);
-            if(file.exists()){
-                file.delete();
-            }
 
-            Intent intent = new Intent(Demo.this, HotwordSetupActivity.class);
-            startActivity(intent);
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(Demo.this);
+
+            builder.setTitle("모델을 다시 생성하시겠습니까?")
+                    .setMessage("다시 생성하실 경우, 기존 모델이 삭제됩니다.\n그래도 다시 생성하시겠습니까?")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            File file = new File(Constants.PERSONAL_MODEL_GENERATED);
+                            if(file.exists()){
+                                file.delete();
+                            }
+
+                            Intent intent = new Intent(Demo.this, HotwordSetupActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .create()
+                    .show();
         }
     };
 
@@ -231,12 +267,15 @@ public class Demo extends Activity {
                         emotion = "오류";
                         break;
                 }
+
+                Toast.makeText(getApplicationContext(), "현재 감정 : "+emotion, Toast.LENGTH_SHORT).show();
             }
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
                 case MSG_ACTIVE:
-                    activeTimes++;
-                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+//                    activeTimes++;
+//                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                        vibrator.vibrate(500);
                     break;
                 case MSG_INFO:
                     Toast.makeText(Demo.this, "MSG_INFO", Toast.LENGTH_SHORT).show();
@@ -251,7 +290,7 @@ public class Demo extends Activity {
                     Toast.makeText(Demo.this, "MSG_ERROR", Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_STOP:
-                    Toast.makeText(Demo.this, "MSG_STOP", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Demo.this, "MSG_STOP", Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_TIMER_ERROR:
                     Toast.makeText(Demo.this, "MSG_TIMER_ERROR", Toast.LENGTH_SHORT).show();
