@@ -8,16 +8,50 @@
     tools:context="ai.kitt.snowboy.HotwordSetupActivity">
 
     <LinearLayout
+        android:id="@+id/ll_rerecord_hotword_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="67dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="음성 재녹음"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/iv_rerecord"
+                android:layout_width="130px"
+                android:layout_height="130px"
+                android:onClick="iv_rereocrd_clicked"
+                android:src="@drawable/btn_rerecord_background" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="140dp"
         android:layout_marginBottom="77dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/ll_model_generate_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/ll_rerecord_hotword_layout">
 
         <TextView
             android:id="@+id/tv_hotword_setup_title"
@@ -144,7 +178,7 @@
         android:id="@+id/ll_model_generate_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
@@ -152,12 +186,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="64dp"
-            android:layout_height="61dp"
-            android:layout_marginBottom="22dp"
-            android:src="@drawable/btn_download_background_gif" />
 
         <Button
             android:id="@+id/btn_result"
@@ -177,6 +205,12 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="64dp"
+            android:layout_height="61dp"
+            android:layout_marginBottom="22dp"
+            android:src="@drawable/btn_download_background_gif" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

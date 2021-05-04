@@ -1,13 +1,16 @@
 package ai.kitt.snowboy;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -18,6 +21,7 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,6 +71,8 @@ public class HotwordSetupActivity extends AppCompatActivity {
     TextView tv_model_generate_result;
     TextView tv_hotword_setup_title;
 
+    ImageView iv_rerecord;
+
     LinearLayout ll_model_generate_view;
     LinearLayout ll_record_btns_group;
 
@@ -98,6 +104,8 @@ public class HotwordSetupActivity extends AppCompatActivity {
         tv_record_third = findViewById(R.id.tv_record_third);
         tv_model_generate_result = findViewById(R.id.tv_model_generate_result);
         tv_hotword_setup_title = findViewById(R.id.tv_hotword_setup_title);
+
+        iv_rerecord = findViewById(R.id.iv_rerecord);
 
         ll_model_generate_view = findViewById(R.id.ll_model_generate_view);
         ll_record_btns_group = findViewById(R.id.ll_record_btns_group);
@@ -176,6 +184,33 @@ public class HotwordSetupActivity extends AppCompatActivity {
 
         serverService = new ServerService(HotwordSetupActivity.this, handler);
         serverService.requestUploadMultiple(file1, file2, file3);
+    }
+
+    public void iv_rereocrd_clicked(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(HotwordSetupActivity.this);
+
+        builder.setTitle("음성을 다시 녹음하시겠습니까?")
+                .setMessage("모든 음성이 삭제되고, 처음부터 다시 녹음하셔야 합니다.")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        fileExistDelete();
+                        ll_model_generate_view.setVisibility(View.INVISIBLE);
+                        tv_hotword_setup_title.setText(R.string.hotword_setup_title_bef);
+                        ll_record_btns_group.setVisibility(View.VISIBLE);
+                    }
+                })
+                .setNegativeButton("아니오", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+
+                    }
+                })
+                .show();
     }
 
     // 모델을 생성하기 위한 파일이 모두 있을경우 공통된 동작
