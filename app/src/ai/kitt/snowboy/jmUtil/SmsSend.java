@@ -12,7 +12,6 @@ import androidx.core.content.FileProvider;
 
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
-import com.klinker.android.send_message.Transaction;
 
 import org.tensorflow.lite.support.common.FileUtil;
 
