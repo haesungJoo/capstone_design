@@ -59,7 +59,8 @@ public class HotwordSetupActivity extends AppCompatActivity {
             Manifest.permission.SEND_SMS,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.INTERNET
+            Manifest.permission.INTERNET,
+            Manifest.permission.READ_PHONE_STATE
     };
     private final static int REQUEST_PERMISSION_CODE = 1000;
 

@@ -53,7 +53,7 @@ import ai.kitt.snowboy.util.TimerThread;
 public class Demo extends Activity {
 
     private Button record_button;
-    private Button play_button;
+    private Button btn_self_sue;
     private Button siren_button;
     private Button btn_model_regenerate;
 
@@ -110,9 +110,9 @@ public class Demo extends Activity {
         record_button.setOnClickListener(record_button_handle);
         record_button.setEnabled(true);
 
-        play_button = (Button) findViewById(R.id.btn_sue);
-        play_button.setOnClickListener(selfsue_button_handle);
-        play_button.setEnabled(true);
+        btn_self_sue = (Button) findViewById(R.id.btn_sue);
+        btn_self_sue.setOnClickListener(selfsue_button_handle);
+        btn_self_sue.setEnabled(true);
 
         siren_button = (Button) findViewById(R.id.btn_siren);
         siren_button.setOnClickListener(siren_button_handle);
@@ -261,6 +261,7 @@ public class Demo extends Activity {
                         emotion = "화남";
                         break;
                     case 1:
+//                        alertTime.sendMms_alert(filePath);
                         emotion = "중립";
                         break;
                     case 2:
