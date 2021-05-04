@@ -1,5 +1,7 @@
 package ai.kitt.snowboy;
 
+import ai.kitt.snowboy.util.BackPressedHandler;
+import ai.kitt.snowboy.util.UtilMethods;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +44,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,6 +83,8 @@ public class HotwordSetupActivity extends AppCompatActivity {
     private FileExistCheck fileExistCheck = null;
     private ServerService serverService;
 
+    private BackPressedHandler backPressedHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +96,13 @@ public class HotwordSetupActivity extends AppCompatActivity {
         }
 
         setUI();
+        backPressedHandler = new BackPressedHandler(this);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        backPressedHandler.onBackPressed();
     }
 
     public void setUI(){

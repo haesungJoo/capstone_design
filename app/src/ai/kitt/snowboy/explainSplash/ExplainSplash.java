@@ -1,5 +1,6 @@
 package ai.kitt.snowboy.explainSplash;
 
+import ai.kitt.snowboy.util.BackPressedHandler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,6 +27,8 @@ public class ExplainSplash extends AppCompatActivity {
 
     Handler mHandler;
 
+    private BackPressedHandler backPressedHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,14 @@ public class ExplainSplash extends AppCompatActivity {
 
         three_dots_thread.start();
         ll_next_button_thread.start();
+
+        backPressedHandler = new BackPressedHandler(this);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        backPressedHandler.onBackPressed();
     }
 
     private View.OnClickListener ll_next_btn_handler = new View.OnClickListener() {

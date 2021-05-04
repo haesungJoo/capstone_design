@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import ai.kitt.snowboy.util.BackPressedHandler;
 import androidx.annotation.RequiresApi;
 
 import java.io.File;
@@ -74,6 +75,8 @@ public class Demo extends Activity {
 
     private Vibrator vibrator;
 
+    private BackPressedHandler backPressedHandler;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +95,16 @@ public class Demo extends Activity {
         timerThread = new TimerThread(handle);
 
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-    }
-    
-    void showToast(CharSequence msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+        backPressedHandler = new BackPressedHandler(this);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        backPressedHandler.onBackPressed();
+    }
+    
     private void setUI() {
         record_button = (Button) findViewById(R.id.btn_start);
         record_button.setOnClickListener(record_button_handle);
