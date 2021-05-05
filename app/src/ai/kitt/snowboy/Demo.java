@@ -77,6 +77,9 @@ public class Demo extends Activity {
 
     private BackPressedHandler backPressedHandler;
 
+    private Boolean onPauseFlag = true;
+    private Boolean onPuaseVibrateFlag = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -281,9 +284,10 @@ public class Demo extends Activity {
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
                 case MSG_ACTIVE:
-//                    activeTimes++;
-//                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
-                        vibrator.vibrate(500);
+//                  activeTimes++;
+//                  Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    vibrator.vibrate(500);
+//                    onPuaseVibrateFlag = true;
                     break;
                 case MSG_INFO:
                     Toast.makeText(Demo.this, "MSG_INFO", Toast.LENGTH_SHORT).show();
@@ -311,8 +315,23 @@ public class Demo extends Activity {
     };
 
     @Override
+    protected void onPause() {
+
+        // 한번 onPause 되면 계속 onPause 됨
+        // onPauseFlag doesn't change
+//        while(onPauseFlag){
+//            if(onPuaseVibrateFlag){
+//                vibrator.vibrate(500);
+//                onPuaseVibrateFlag = false;
+//            }
+//        }
+        super.onPause();
+    }
+
+    @Override
      public void onDestroy() {
-         recordingThread.stopRecording();
-         super.onDestroy();
+//        onPauseFlag = false;
+        recordingThread.stopRecording();
+        super.onDestroy();
      }
 }
