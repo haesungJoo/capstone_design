@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--        TODO 종민이가 설명 넣을곳-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_custom_dialog_title"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:text="설명하는 창 타이틀"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#9AC9E3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_custom_dialog_title"
+        android:layout_above="@+id/ll_custom_dialog_dismiss"
+        android:background="#C1ABAB">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_custom_dialog_dismiss"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_custom_dialog_dismiss"
+            android:text="닫기 버튼 내용"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</RelativeLayout>

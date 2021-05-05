@@ -22,7 +22,6 @@ public class AlertTime {
     private final Context mContext;
     private SmsSend smsSend;
     private GpsTracker gpsTracker;
-    private final String phnum = "01054062436";
 
     public AlertTime(Context context) {
         this.mContext = context;
@@ -111,7 +110,7 @@ public class AlertTime {
         //문자 전송
         smsSend = new SmsSend(mContext);
         String msg = "살려주세요! 제 위치는 "+loc+" 입니다. 주변상황 녹음파일과 함께 전송합니다.";
-        //String phnum = "01026670860";
+        String phnum = "01091724252";
         smsSend.sendMMS(phnum,filepath,msg);
     }
 
@@ -124,7 +123,7 @@ public class AlertTime {
         //문자 전송
         smsSend = new SmsSend(mContext);
         String msg = "살려주세요! 제 위치는 "+loc+" 입니다.";
-        //String phnum = "01026670860";
+        String phnum = "01091724252";
         smsSend.sendMsg(msg,phnum);
     }
 

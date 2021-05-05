@@ -1,5 +1,7 @@
 package ai.kitt.snowboy;
 
+import ai.kitt.snowboy.info.CustomDialogClickListener;
+import ai.kitt.snowboy.info.InfoCustomDialog;
 import ai.kitt.snowboy.util.BackPressedHandler;
 import ai.kitt.snowboy.util.UtilMethods;
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,7 +62,8 @@ public class HotwordSetupActivity extends AppCompatActivity {
             Manifest.permission.SEND_SMS,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.INTERNET
+            Manifest.permission.INTERNET,
+            Manifest.permission.READ_PHONE_STATE
     };
     private final static int REQUEST_PERMISSION_CODE = 1000;
 
@@ -67,6 +71,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
     Button btn_record_second;
     Button btn_record_third;
     Button btn_result;
+    Button btn_splash_info;
 
     TextView tv_record_first;
     TextView tv_record_second;
@@ -110,6 +115,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
         btn_record_second = findViewById(R.id.btn_record_second);
         btn_record_third = findViewById(R.id.btn_record_third);
         btn_result = findViewById(R.id.btn_result);
+        btn_splash_info = findViewById(R.id.btn_splash_info);
 
         tv_record_first = findViewById(R.id.tv_record_first);
         tv_record_second = findViewById(R.id.tv_record_second);
@@ -224,6 +230,23 @@ public class HotwordSetupActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
+    public void btn_splash_info_clicked(View view){
+        InfoCustomDialog customDialog = new InfoCustomDialog(HotwordSetupActivity.this, new CustomDialogClickListener() {
+            @Override
+            public void onPositiveClick() {
+
+            }
+        });
+
+        customDialog.getWindow().setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+                );
+
+        customDialog.show();
+    }
+
 
     // 모델을 생성하기 위한 파일이 모두 있을경우 공통된 동작
     // 1. 3개의 파일이 있는지 없는지 모두 확인

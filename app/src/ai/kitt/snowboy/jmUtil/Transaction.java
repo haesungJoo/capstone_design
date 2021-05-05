@@ -113,7 +113,7 @@ public class Transaction {
             try {
                 Looper.prepare();
             } catch (Exception var7) {
-
+                String test = "test";
             }
 
             RateController.init(this.context);

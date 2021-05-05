@@ -7,9 +7,9 @@
     android:background="@drawable/explain_splash_background"
     tools:context="ai.kitt.snowboy.HotwordSetupActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_rerecord_hotword_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="67dp"
         android:orientation="vertical"
@@ -42,7 +42,22 @@
                 android:src="@drawable/btn_rerecord_background" />
 
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <Button
+                android:id="@+id/btn_splash_info"
+                android:onClick="btn_splash_info_clicked"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/btn_info_background" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"

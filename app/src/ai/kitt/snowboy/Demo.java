@@ -53,7 +53,7 @@ import ai.kitt.snowboy.util.TimerThread;
 public class Demo extends Activity {
 
     private Button record_button;
-    private Button play_button;
+    private Button btn_self_sue;
     private Button siren_button;
     private Button btn_model_regenerate;
 
@@ -76,6 +76,9 @@ public class Demo extends Activity {
     private Vibrator vibrator;
 
     private BackPressedHandler backPressedHandler;
+
+    private Boolean onPauseFlag = true;
+    private Boolean onPuaseVibrateFlag = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,9 +113,9 @@ public class Demo extends Activity {
         record_button.setOnClickListener(record_button_handle);
         record_button.setEnabled(true);
 
-        play_button = (Button) findViewById(R.id.btn_sue);
-        play_button.setOnClickListener(selfsue_button_handle);
-        play_button.setEnabled(true);
+        btn_self_sue = (Button) findViewById(R.id.btn_sue);
+        btn_self_sue.setOnClickListener(selfsue_button_handle);
+        btn_self_sue.setEnabled(true);
 
         siren_button = (Button) findViewById(R.id.btn_siren);
         siren_button.setOnClickListener(siren_button_handle);
@@ -261,6 +264,7 @@ public class Demo extends Activity {
                         emotion = "화남";
                         break;
                     case 1:
+//                        alertTime.sendMms_alert(filePath);
                         emotion = "중립";
                         break;
                     case 2:
@@ -280,9 +284,10 @@ public class Demo extends Activity {
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
             switch(message) {
                 case MSG_ACTIVE:
-//                    activeTimes++;
-//                     Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
-                        vibrator.vibrate(500);
+//                  activeTimes++;
+//                  Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    vibrator.vibrate(500);
+//                    onPuaseVibrateFlag = true;
                     break;
                 case MSG_INFO:
                     Toast.makeText(Demo.this, "MSG_INFO", Toast.LENGTH_SHORT).show();
@@ -310,8 +315,23 @@ public class Demo extends Activity {
     };
 
     @Override
+    protected void onPause() {
+
+        // 한번 onPause 되면 계속 onPause 됨
+        // onPauseFlag doesn't change
+//        while(onPauseFlag){
+//            if(onPuaseVibrateFlag){
+//                vibrator.vibrate(500);
+//                onPuaseVibrateFlag = false;
+//            }
+//        }
+        super.onPause();
+    }
+
+    @Override
      public void onDestroy() {
-         recordingThread.stopRecording();
-         super.onDestroy();
+//        onPauseFlag = false;
+        recordingThread.stopRecording();
+        super.onDestroy();
      }
 }
