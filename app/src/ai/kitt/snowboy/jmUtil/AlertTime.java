@@ -30,7 +30,7 @@ public class AlertTime {
     public void showDialog(){
         //경고창
         AlertDialog.Builder ad = new AlertDialog.Builder(mContext);
-        ad.setIcon(R.mipmap.ic_launcher);
+        ad.setIcon(R.drawable.splash_main_background_logo);
         ad.setTitle("긴급 신고");//제목
         ad.setMessage("10초 뒤 신고메시지가 전송됩니다.");//내용
 
@@ -67,7 +67,7 @@ public class AlertTime {
     public void sendMms_alert(String filepath){
         //경고창
         AlertDialog.Builder ad = new AlertDialog.Builder(mContext);
-        ad.setIcon(R.mipmap.ic_launcher);
+        ad.setIcon(R.drawable.splash_main_background_logo);
         ad.setTitle("긴급 신고");//제목
         ad.setMessage("10초 뒤 신고메시지가 전송됩니다.");//내용
 

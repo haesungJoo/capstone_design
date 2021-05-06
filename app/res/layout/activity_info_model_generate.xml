@@ -14,23 +14,99 @@
         android:layout_height="wrap_content">
         <TextView
             android:gravity="center"
-            android:text="설명하는 창 타이틀"
+            android:text="모델 생성 방법"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#9AC9E3"/>
+
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_custom_dialog_title"
-        android:layout_above="@+id/ll_custom_dialog_dismiss"
-        android:background="#C1ABAB">
+        android:layout_height="655dp"
+        android:layout_below="@id/ll_custom_dialog_title"
+        android:layout_marginTop="0dp"
+        android:fillViewport="true"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_explain1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/iv_explain1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:text="1. 녹음 시작 버튼을 눌러주세요."/>
+
+            <ImageView
+                android:id="@+id/iv_explain2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/iv_explain2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                android:text="2. 녹음중 이라는 메시지가 뜨면 &quot;살려주세요&quot;라고 말씀한 뒤 버튼을 다시 클릭하여주세요."/>
+
+            <ImageView
+                android:id="@+id/iv_explain3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/iv_explain3"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                android:text="3. 1번, 2번과 같은 방법으로 2번째 3번째 녹음을 진행하여주세요."/>
+
+            <ImageView
+                android:id="@+id/iv_explain4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/iv_explain4"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                android:text="4. 버튼을 눌러 모델을 생성한 뒤 앱을 사용해주세요."/>
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/ll_custom_dialog_dismiss"
@@ -40,7 +116,7 @@
 
         <Button
             android:id="@+id/btn_custom_dialog_dismiss"
-            android:text="닫기 버튼 내용"
+            android:text="닫기"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
