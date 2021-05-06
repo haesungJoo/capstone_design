@@ -11,7 +11,7 @@
         android:id="@+id/ll_custom_dialog_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
@@ -54,26 +54,32 @@
     <FrameLayout
         android:id="@+id/lo_frame"
         android:layout_width="match_parent"
-        android:layout_height="655dp"
-        android:layout_below="@id/ll_custom_dialog_btn"
+        android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:fillViewport="true"
         android:gravity="center"
+        android:layout_below="@id/ll_custom_dialog_dismiss"
+        android:layout_above="@id/ll_custom_dialog_btn"
         android:orientation="vertical">
 
     </FrameLayout>
 
     <LinearLayout
         android:id="@+id/ll_custom_dialog_dismiss"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="right">
 
         <Button
             android:id="@+id/btn_dismiss"
-            android:text="닫기"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:text="X"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btn_custom_dialog_close_action"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
 
     </LinearLayout>
 </RelativeLayout>

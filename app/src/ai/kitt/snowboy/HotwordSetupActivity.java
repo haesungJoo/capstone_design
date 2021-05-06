@@ -214,6 +214,12 @@ public class HotwordSetupActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
+
+                        fileExistCheck = new FileExistCheck("record1.wav", "record2.wav", "record3.wav");
+                        if(fileExistCheck.fileExist()){
+
+                        }
+
                         fileExistDelete();
                         ll_model_generate_view.setVisibility(View.INVISIBLE);
                         tv_hotword_setup_title.setText(R.string.hotword_setup_title_bef);
@@ -239,10 +245,10 @@ public class HotwordSetupActivity extends AppCompatActivity {
             }
         });
 
-        customDialog.getWindow().setLayout(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT
-                );
+//        customDialog.getWindow().setLayout(
+//            WindowManager.LayoutParams.MATCH_PARENT,
+//            WindowManager.LayoutParams.MATCH_PARENT
+//        );
 
         customDialog.show();
     }
