@@ -37,6 +37,17 @@
             tools:layout_editor_absoluteY="16dp" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_main_info"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_alignParentRight="false"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_info_background"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"

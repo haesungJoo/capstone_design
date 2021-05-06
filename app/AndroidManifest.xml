@@ -33,6 +33,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name="ai.kitt.snowboy.explainSplash.ExplainSplash"></activity>
+        <activity android:name="ai.kitt.snowboy.info.MainInfoCustomDialog"
+            android:theme="@style/Theme.MyDialog"/>
         <activity android:name="ai.kitt.snowboy.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

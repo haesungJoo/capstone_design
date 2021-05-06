@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import ai.kitt.snowboy.info.MainInfoCustomDialog;
 import ai.kitt.snowboy.util.BackPressedHandler;
 import androidx.annotation.RequiresApi;
 
@@ -56,6 +57,7 @@ public class Demo extends Activity {
     private Button btn_self_sue;
     private Button siren_button;
     private Button btn_model_regenerate;
+    private Button btn_main_info;
 
     private TextView tv_model_regenerate;
     private TextView tv_siren;
@@ -128,6 +130,10 @@ public class Demo extends Activity {
 
         btn_model_regenerate = (Button) findViewById(R.id.btn_model_regenerate);
         btn_model_regenerate.setOnClickListener(btn_model_regenerate_handle);
+
+        btn_main_info = (Button) findViewById(R.id.btn_main_info);
+        btn_main_info.setOnClickListener(btn_main_info_clicked);
+        btn_main_info.setEnabled(true);
     }
     
     private void startRecording() {
@@ -235,6 +241,15 @@ public class Demo extends Activity {
         }
     }
 
+
+    private OnClickListener btn_main_info_clicked = new OnClickListener() {
+        // @Override
+        public void onClick(View arg0) {
+            Intent intent = new Intent(Demo.this, MainInfoCustomDialog.class);
+            startActivity(intent);
+        }
+    };
+
     public Handler handle = new Handler() {
         @SuppressLint("HandlerLeak")
         @Override
@@ -313,6 +328,8 @@ public class Demo extends Activity {
              }
         }
     };
+
+
 
     @Override
     protected void onPause() {
