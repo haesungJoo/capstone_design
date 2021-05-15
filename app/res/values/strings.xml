@@ -3,7 +3,7 @@
     <string name="app_name">구해줘</string>
 
     <string name="btn_actionstart">기능켜기</string>
-    <string name="btn_actionstop">기능끄끼</string>
+    <string name="btn_actionstop">기능끄기</string>
     <string name="btn_sue">수동신고</string>
     <string name="start_record">녹음시작</string>
     <string name="stop_record">녹음중</string>
