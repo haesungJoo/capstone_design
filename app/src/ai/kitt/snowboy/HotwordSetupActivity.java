@@ -333,7 +333,7 @@ public class HotwordSetupActivity extends AppCompatActivity {
         File file2 = fileExistCheck.filePathConnector("record2.wav");
         File file3 = fileExistCheck.filePathConnector("record3.wav");
 
-//                    녹음한 파일 3개 제거
+        // 녹음한 파일 3개 제거
         fileExistCheck.fileDelete(file1, file2, file3);
     }
 

@@ -32,7 +32,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="ai.kitt.snowboy.explainSplash.ExplainSplash"></activity>
+        <activity android:name="ai.kitt.snowboy.explainSplash.ExplainSplash"/>
         <activity android:name="ai.kitt.snowboy.info.MainInfoCustomDialog"
             android:theme="@style/Theme.MyDialog"/>
         <activity android:name="ai.kitt.snowboy.Splash">
@@ -46,7 +46,8 @@
         <activity
             android:name="ai.kitt.snowboy.Demo"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask"/>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
     </application>

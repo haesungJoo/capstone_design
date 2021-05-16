@@ -5,13 +5,19 @@ import ai.kitt.snowboy.audio.RecordingThread;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +36,8 @@ import android.widget.Toast;
 import ai.kitt.snowboy.info.MainInfoCustomDialog;
 import ai.kitt.snowboy.util.BackPressedHandler;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +60,11 @@ import ai.kitt.snowboy.modelUtil.WavFileException;
 import ai.kitt.snowboy.util.TimerThread;
 
 public class Demo extends Activity {
+
+    private static final String NOTIFICATION_CHANNEL_ID = "1001";
+    private CharSequence channelName = "구해줘";
+    private String description = channelName+"  설명";
+    private int importance = NotificationManager.IMPORTANCE_HIGH;
 
     private Button record_button;
     private Button btn_self_sue;
@@ -301,8 +314,36 @@ public class Demo extends Activity {
                 case MSG_ACTIVE:
 //                  activeTimes++;
 //                  Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
-                    vibrator.vibrate(500);
+//                    vibrator.vibrate(500);
 //                    onPuaseVibrateFlag = true;
+
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    PendingIntent pendingIntent = PendingIntent.getActivity(
+                            getApplicationContext(),
+                            0,
+                            new Intent(getApplicationContext(), Demo.class),
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                        .setSmallIcon(R.drawable.logo_background)
+                        .setContentTitle(getResources().getString(R.string.app_name))
+                        .setContentText("키워드를 호출했습니다.")
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
+                        notificationChannel.setDescription(description);
+
+                        assert notificationManager != null;
+                        notificationManager.createNotificationChannel(notificationChannel);
+                    }
+
+                    notificationManager.notify(1234, builder.build());
+
                     break;
                 case MSG_INFO:
                     Toast.makeText(Demo.this, "MSG_INFO", Toast.LENGTH_SHORT).show();
@@ -329,7 +370,9 @@ public class Demo extends Activity {
         }
     };
 
+    public void notificationEmotion(){
 
+    }
 
     @Override
     protected void onPause() {
