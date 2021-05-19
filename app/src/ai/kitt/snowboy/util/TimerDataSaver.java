@@ -38,6 +38,14 @@ public class TimerDataSaver implements AudioDataReceivedListener {
 
     @Override
     public void start() {
+        // TODO notification 진동으로 인한 간섭으로 녹음 타이밍 늦춤
+        try
+        {
+            Thread.sleep(2000);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         if(saveFile != null){
             if(saveFile.exists()){
                 saveFile.delete();
