@@ -56,7 +56,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/report_explain"/>
+                android:src="@drawable/auto_explain3"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:textSize="15sp"
                 android:textColor="@color/black"
                 android:layout_margin="10dp"
-                android:text="3. 녹음한 목소리가 두려움일 경우 종합상황실에 10초 뒤 신고메시지가 전송됩니다(즉시전송 혹은 취소 가능)."/>
+                android:text="3. 녹음한 목소리가 두려움일 경우 사용자에게 알람이 가고 종합상황실에 10초 뒤 신고메시지가 전송됩니다(즉시전송 혹은 취소 가능)."/>
 
             <ImageView
                 android:id="@+id/iv_explain4"
@@ -73,7 +73,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/auto_explain3"/>
+                android:src="@drawable/auto_explain4"/>
 
             <TextView
                 android:layout_width="match_parent"

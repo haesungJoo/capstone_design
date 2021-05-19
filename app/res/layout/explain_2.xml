@@ -39,7 +39,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/report_explain"/>
+                android:src="@drawable/pass_explain2"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/pass_explain2"/>
+                android:src="@drawable/pass_explain3"/>
 
             <TextView
                 android:layout_width="match_parent"
