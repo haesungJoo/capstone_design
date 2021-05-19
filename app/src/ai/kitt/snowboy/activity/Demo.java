@@ -1,57 +1,47 @@
-package ai.kitt.snowboy;
+package ai.kitt.snowboy.activity;
 
+import ai.kitt.snowboy.AppResCopy;
+import ai.kitt.snowboy.Constants;
+import ai.kitt.snowboy.MsgEnum;
 import ai.kitt.snowboy.audio.RecordingThread;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.media.AudioManager;
-import android.media.RingtoneManager;
-import android.media.SoundPool;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
-import android.text.Html;
-import android.util.Log;
+import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import ai.kitt.snowboy.info.MainInfoCustomDialog;
+import ai.kitt.snowboy.receiverBroad.ActionReceiver;
 import ai.kitt.snowboy.util.BackPressedHandler;
-import androidx.annotation.RequiresApi;
+
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.util.List;
-import java.util.Locale;
 
 import ai.kitt.snowboy.audio.AudioDataSaver;
 import ai.kitt.snowboy.demo.R;
 
 import ai.kitt.snowboy.jmUtil.AlertTime;
-import ai.kitt.snowboy.jmUtil.GpsTracker;
 import ai.kitt.snowboy.jmUtil.SirenSound;
-import ai.kitt.snowboy.jmUtil.SmsSend;
 import ai.kitt.snowboy.modelUtil.Classifier;
 import ai.kitt.snowboy.modelUtil.FileFormatNotSupportedException;
 import ai.kitt.snowboy.modelUtil.JLibrosa;
@@ -115,6 +105,8 @@ public class Demo extends Activity {
         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
         backPressedHandler = new BackPressedHandler(this);
+
+
     }
 
     @Override
@@ -299,7 +291,9 @@ public class Demo extends Activity {
                         emotion = "행복";
                         break;
                     case 3:
-                        alertTime.sendMms_alert(filePath);
+//                        alertTime.sendMms_alert(filePath);
+                        notificationAlertEmotion("감정이 두려움이라고 판단되었습니다.\n신고하시겠습니까?\n(아무 동작도 안하신다면 10초뒤에 자동신고됩니다.)",
+                                filePath);
                         emotion = "두려움";
                         break;
                     default:
@@ -317,32 +311,7 @@ public class Demo extends Activity {
 //                    vibrator.vibrate(500);
 //                    onPuaseVibrateFlag = true;
 
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                    PendingIntent pendingIntent = PendingIntent.getActivity(
-                            getApplicationContext(),
-                            0,
-                            new Intent(getApplicationContext(), Demo.class),
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                    );
-
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.logo_background)
-                        .setContentTitle(getResources().getString(R.string.app_name))
-                        .setContentText("키워드를 호출했습니다.")
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true);
-
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
-                        notificationChannel.setDescription(description);
-
-                        assert notificationManager != null;
-                        notificationManager.createNotificationChannel(notificationChannel);
-                    }
-
-                    notificationManager.notify(1234, builder.build());
+                    notificationAlert("키워드를 호출했습니다.");
 
                     break;
                 case MSG_INFO:
@@ -370,8 +339,117 @@ public class Demo extends Activity {
         }
     };
 
-    public void notificationEmotion(){
+    public void notificationAlert(String contentText){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent intent = new Intent(getApplicationContext(), Demo.class);
+        intent.putExtra("notificationAlertEmotion", "");
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_background)
+                .setContentTitle(getResources().getString(R.string.app_name))
+                .setContentText(contentText)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
+            notificationChannel.setDescription(description);
+
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        notificationManager.notify(1234, builder.build());
+    }
+
+    public void notificationAlertEmotion(String contentText, String filePath){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent intentToDemo = new Intent(this, Demo.class);
+        intentToDemo.putExtra("notificationAlertEmotion", "scare");
+        intentToDemo.putExtra("filePath", filePath);
+
+        Intent intentToBroadCastYes = new Intent(this, ActionReceiver.class);
+        intentToBroadCastYes.putExtra("check", "yes");
+        intentToBroadCastYes.putExtra("filePath", filePath);
+
+        Intent intentToBroadCastNo = new Intent(this, ActionReceiver.class);
+        intentToBroadCastNo.putExtra("check", "no");
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                1,
+                intentToDemo,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        PendingIntent pendingIntentBroadCastYes = PendingIntent.getBroadcast(
+                getApplicationContext(),
+                2,
+                intentToBroadCastYes,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        PendingIntent pendingIntentBroadCastNo = PendingIntent.getBroadcast(
+                getApplicationContext(),
+                3,
+                intentToBroadCastNo,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_background)
+                .setContentTitle(getResources().getString(R.string.app_name))
+                .setContentText(contentText)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(contentText))
+                .setContentIntent(pendingIntent)
+                .addAction(R.drawable.logo_background, "확인", pendingIntentBroadCastYes)
+                .addAction(R.drawable.logo_background, "취소", pendingIntentBroadCastNo)
+                .setAutoCancel(true);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
+            notificationChannel.setDescription(description);
+
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        notificationManager.cancel(1234);
+        notificationManager.notify(1235, builder.build());
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                StatusBarNotification[] statusBarNotifications = notificationManager.getActiveNotifications();
+
+                for(StatusBarNotification statusBarNotification: statusBarNotifications){
+                    if(statusBarNotification.getId() == 1235){
+                        sendBroadcast(intentToBroadCastYes);
+                    }
+                }
+            }
+        }, 10000);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String emotion = intent.getStringExtra("notificationAlertEmotion");
+        if(emotion != null && emotion.equals("scare")){
+            String filePath = intent.getStringExtra("filePath");
+
+            alertTime.sendMms_alert(filePath, "확인버튼을 누르시면\n신고메시지가 전송됩니다.");
+        }
     }
 
     @Override

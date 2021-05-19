@@ -19,7 +19,7 @@ import ai.kitt.snowboy.demo.R;
 
 public class AlertTime {
 
-    private final Context mContext;
+    private Context mContext;
     private SmsSend smsSend;
     private GpsTracker gpsTracker;
 
@@ -64,12 +64,13 @@ public class AlertTime {
         }, 10000);
     }
 
-    public void sendMms_alert(String filepath){
+    public void sendMms_alert(String filepath, String msg){
         //경고창
         AlertDialog.Builder ad = new AlertDialog.Builder(mContext);
         ad.setIcon(R.drawable.splash_main_background_logo);
         ad.setTitle("긴급 신고");//제목
-        ad.setMessage("10초 뒤 신고메시지가 전송됩니다.");//내용
+//        ad.setMessage("10초 뒤 신고메시지가 전송됩니다.");//내용
+        ad.setMessage(msg);//내용
 
         //final EditText et = new EditText(Demo.this);
         //ad.setView(et);
@@ -90,15 +91,15 @@ public class AlertTime {
         });
         final AlertDialog alertDialog = ad.create();
         alertDialog.show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(alertDialog.isShowing()){
-                    mms_report(filepath);
-                    alertDialog.dismiss();
-                }
-            }
-        }, 10000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(alertDialog.isShowing()){
+//                    mms_report(filepath);
+//                    alertDialog.dismiss();
+//                }
+//            }
+//        }, 10000);
     }
 
     public void mms_report(String filepath){

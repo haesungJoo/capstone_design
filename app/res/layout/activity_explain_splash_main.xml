@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/explain_splash_background"
-    tools:context="ai.kitt.snowboy.explainSplash.ExplainSplash">
+    tools:context="ai.kitt.snowboy.splashUtil.ExplainSplash">
 
     <LinearLayout
         android:id="@+id/linearLayout"

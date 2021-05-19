@@ -1,9 +1,10 @@
-package ai.kitt.snowboy;
+package ai.kitt.snowboy.activity;
 
+import ai.kitt.snowboy.MsgEnum;
 import ai.kitt.snowboy.info.CustomDialogClickListener;
 import ai.kitt.snowboy.info.InfoCustomDialog;
 import ai.kitt.snowboy.util.BackPressedHandler;
-import ai.kitt.snowboy.util.UtilMethods;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,47 +12,25 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Vibrator;
-import android.provider.MediaStore;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import ai.kitt.snowboy.demo.R;
 import ai.kitt.snowboy.hotWordSetupUtil.FileExistCheck;
 import ai.kitt.snowboy.hotWordSetupUtil.RecordAudioForServer;
-import ai.kitt.snowboy.serverUtil.AudioClient;
-import ai.kitt.snowboy.serverUtil.RetrofitService;
 import ai.kitt.snowboy.serverUtil.ServerService;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import okhttp3.internal.Util;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class HotwordSetupActivity extends AppCompatActivity {
 

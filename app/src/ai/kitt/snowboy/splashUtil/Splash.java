@@ -1,4 +1,4 @@
-package ai.kitt.snowboy;
+package ai.kitt.snowboy.splashUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,9 +9,9 @@ import androidx.annotation.Nullable;
 
 import java.io.File;
 
+import ai.kitt.snowboy.Constants;
+import ai.kitt.snowboy.activity.Demo;
 import ai.kitt.snowboy.demo.R;
-import ai.kitt.snowboy.explainSplash.ExplainSplash;
-import ai.kitt.snowboy.hotWordSetupUtil.FileExistCheck;
 
 public class Splash extends Activity {
 
