@@ -16,34 +16,26 @@
 
         <Button
             android:id="@+id/btn_jadong"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_explain_choose"
             android:text="자동신고" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <Button
             android:id="@+id/btn_sudong"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:layout_weight="1"
             android:background="@drawable/btn_explain_choose"
             android:text="수동신고" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <Button
             android:id="@+id/btn_record"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:layout_weight="1"
             android:background="@drawable/btn_explain_choose"
             android:text="사이렌 울리기" />
