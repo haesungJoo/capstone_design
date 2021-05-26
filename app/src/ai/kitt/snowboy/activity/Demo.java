@@ -266,6 +266,9 @@ public class Demo extends Activity {
                 JLibrosa jLibrosa = new JLibrosa();
                 try {
                     float [] audioFeatureValues = jLibrosa.loadAndRead(filePath, -1,-1);
+                    if(audioFeatureValues.length == 0){
+                        return;
+                    }
                     mClassifier = new Classifier(audioFeatureValues, Demo.this);
                 } catch (IOException e) {
                     e.printStackTrace();
