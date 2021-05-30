@@ -31,14 +31,18 @@
 - 키워드 인식 모델 생성 및, 키워드 음성 인식
 - [SNOWBOY github link](https://github.com/Kitt-AI/snowboy)
 
+
 > Retrofit2(ver. 2.6.4)
 - 서버와의 http 통신을 위한 라이브러리
+
 
 > klinkerapps(ver. 5.2.6)
 - mms 전송의 편의를 위해 사용
 
+
 > tensorflowLite(ver. 0.0.0)
 - 감정인식 모델에 적용하기 위해 사용
+
 
 > nodejs express(ver. 4.17.1)
 - 서버 구축을 위한 프레임워크
