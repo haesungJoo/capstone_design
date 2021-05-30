@@ -14,7 +14,6 @@
 
 [(영상 링크)](https://youtu.be/A54pXhQqja0)
 
-
 ## 프로젝트 개요
 > 사용자의 음성에서 감정을 파악하여 해당 감정에 따라 자동으로 112에 자동 신고
 
@@ -22,3 +21,6 @@
 
 > Snowboy opensource 사용
 - [SNOWBOY github link](https://github.com/Kitt-AI/snowboy)
+
+## 프로젝트 세부 내용
+- 소요시간 : 2020.09 ~ 2021.06
