@@ -8,7 +8,7 @@
 
 > 포스터
 
-![](https://user-images.githubusercontent.com/57201026/120099700-e7410880-c177-11eb-97ff-f1c050a6f090.png)
+<img width="70%" src="https://user-images.githubusercontent.com/57201026/120099700-e7410880-c177-11eb-97ff-f1c050a6f090.png"/>
 
 > 영상 (영상링크 포함)
 
